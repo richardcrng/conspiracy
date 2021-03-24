@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": ["client", "server"],
   "scripts": {
-    "client": "yarn workspace @included-m/client start",
-    "server": "yarn workspace @included-m/server start"
+    "start:client": "yarn workspace @conspiracy/client start",
+    "start:server": "yarn workspace @conspiracy/server start",
+    "start:server:dev": "yarn workspace @conspiracy/server start:dev"
   }
 }
