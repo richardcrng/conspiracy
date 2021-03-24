@@ -1,13 +1,16 @@
-import express from "express";
-import cors from 'cors';
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
 
-const app = express()
-app.use(cors())
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
-app.get('/', (req, res) => {
-  res.json({ message: 'hi!' })
-})
+io.on("connection", (socket: Socket) => {
+  socket.emit('hello', 'world')
+});
 
-app.listen(4000, () => {
-  console.log('server listening')
-})
+httpServer.listen(process.env.PORT ?? 4000);

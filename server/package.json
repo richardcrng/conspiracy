@@ -15,7 +15,8 @@
     "cors": "^2.8.5",
     "express": "^4.15.4",
     "pg": "^8.4.0",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "socket.io": "^4.0.0"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
