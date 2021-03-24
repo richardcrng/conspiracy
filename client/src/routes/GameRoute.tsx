@@ -1,5 +1,9 @@
+import { useParams } from "react-router"
+
 function GameRoute() {
-  return null
+  const { gameId } = useParams<{ gameId: string }>()
+
+  return <p>Game id: {gameId}</p>
 }
 
 export default GameRoute
