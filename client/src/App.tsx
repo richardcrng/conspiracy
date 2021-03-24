@@ -1,32 +1,31 @@
 import { useEffect } from 'react';
 import { io } from "socket.io-client";
-import { SocketEvent, JoinEvent } from './types/event.types';
+import { SocketEvent, CreateGameEvent, GameCreatedEvent } from './types/event.types';
 
 const socket = io('localhost:4000')
-socket.on("hello", (arg) => {
-  console.log(arg); // world
-});
 
 function App() {
 
   useEffect(() => {
-    fetch('http://localhost:4000').then(res => res.json()).then(data => {
-      console.log('from backend:', data)
+    socket.on(SocketEvent.GAME_CREATED, (data: GameCreatedEvent) => {
+      console.log('created game!', data)
     })
-  })
+  }, [socket])
 
-  const handleJoin = () => {
-    const data: JoinEvent = {
-      playerName: 'Richard'
+  const handleNewGame = () => {
+    const data: CreateGameEvent = {
+      playerName: 'Richard',
+      socketId: socket.id
     }
-    socket.emit(SocketEvent.JOIN, data)
+    socket.emit(SocketEvent.CREATE_GAME, data)
   }
 
   return (
     <>
       <h1>Conspiracy</h1>
       <input />
-      <button onClick={handleJoin}>Join game</button>
+      <button onClick={handleNewGame}>New game</button>
+      <button>Join game</button>
     </>
   );
 }
