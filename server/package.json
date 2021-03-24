@@ -1,7 +1,7 @@
 {
   "name": "@conspiracy/server",
   "version": "0.0.1",
-  "description": "Awesome project developed with TypeORM.",
+  "description": "Conspiracy Socket.io server",
   "devDependencies": {
     "@types/express": "^4.17.9",
     "@types/node": "^8.0.29",
@@ -19,7 +19,7 @@
     "socket.io": "^4.0.0"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "start:dev": "ts-node-dev src/index.ts"
+    "start": "ts-node src/server.ts",
+    "start:dev": "ts-node-dev src/server.ts"
   }
 }
