@@ -16,6 +16,7 @@ export enum ServerEvent {
   GAME_CREATED = 'game-created',
   GAME_GOTTEN = 'game-gotten',
   GAME_JOINED = 'game-joined',
+  GAME_NOT_FOUND = 'game-not-found',
   REDIRECT_TO_LOBBY = 'redirect-to-lobby'
 }
 
@@ -29,6 +30,7 @@ export type ServerEventListeners = {
   [ServerEvent.GAME_CREATED]: (e: GameCreatedEvent) => void;
   [ServerEvent.GAME_GOTTEN]: (game: GameBase) => void;
   [ServerEvent.GAME_JOINED]: (e: GameJoinedEvent) => void;
+  [ServerEvent.GAME_NOT_FOUND]: () => void;
   [ServerEvent.REDIRECT_TO_LOBBY]: () => void;
 };
 

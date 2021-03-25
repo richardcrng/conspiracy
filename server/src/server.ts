@@ -24,11 +24,9 @@ io.on("connection", (socket: ServerSocket) => {
 
   socket.on(ClientEvent.GET_GAME, (gameId) => {
     const game = games[gameId];
-    if (game) {
-      socket.emit(ServerEvent.GAME_GOTTEN, game);
-    } else {
-      socket.emit(ServerEvent.REDIRECT_TO_LOBBY);
-    }
+    game
+      ? socket.emit(ServerEvent.GAME_GOTTEN, game)
+      : socket.emit(ServerEvent.GAME_NOT_FOUND);
   })
 
   socket.on(ClientEvent.JOIN_GAME, (e) => {
