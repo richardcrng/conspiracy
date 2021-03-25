@@ -37,3 +37,8 @@ export const getVote = (game: Game, playerId: string): Vote | undefined => {
 
 export const hasVoted = (game: Game, playerId: string): boolean =>
   !!getVote(game, playerId);
+
+export const haveAllVoted = (game: Game): boolean =>
+  Object.values(game.players).every((player) =>
+    hasVoted(game, player.socketId)
+  );

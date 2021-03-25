@@ -43,7 +43,9 @@ function GameRoute() {
         />
       </>
     );
-  } else
+  } else if (game.data?.status === GameStatus.COMPLETE) {
+    return <p>Game complete, voting is done!</p>;
+  } else {
     return (
       <>
         {game.loading && <p>Loading...</p>}
@@ -71,6 +73,7 @@ function GameRoute() {
         )}
       </>
     );
+  }
 }
 
 export default GameRoute;

@@ -1,6 +1,7 @@
 import {
   Game,
   GameBase,
+  GameStatus,
   Player,
   Vote,
 } from "../../../client/src/types/game.types";
@@ -29,6 +30,7 @@ export const makeVote = (
   vote: Vote | null
 ): Game => {
   const game = getGameById(gameId);
+  if (game?.status === GameStatus.COMPLETE) return game;
   if (game) {
     game.votes ||= {};
     if (vote) {

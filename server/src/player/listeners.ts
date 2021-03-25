@@ -6,6 +6,8 @@ import {
 } from "../../../client/src/types/event.types";
 import { getPlayer } from "../db";
 import { makeVote, updatePlayer } from "./controllers";
+import { haveAllVoted } from "../../../client/src/models/game";
+import { GameStatus } from "../../../client/src/types/game.types";
 
 export const addPlayerListeners = (
   socket: ServerSocket,
@@ -20,6 +22,10 @@ export const addPlayerListeners = (
 
   socket.on(ClientEvent.MAKE_VOTE, (gameId, playerId, vote) => {
     const game = makeVote(gameId, playerId, vote);
+    const allVoted = haveAllVoted(game);
+    if (allVoted) {
+      game.status = GameStatus.COMPLETE;
+    }
     io.emit(ServerEvent.GAME_UPDATED, game.id, game);
   });
 
