@@ -18,7 +18,7 @@ const initialState: UseGameResult = {
 };
 
 export default function useGame(gameId: GameBase["id"]): UseGameResult {
-  const socket = useSocket();
+  const { socket } = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
   useEffect(() => {

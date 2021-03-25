@@ -6,7 +6,7 @@ export const socket: ClientSocket = io("localhost:4000");
 
 export const SocketContext = createContext(socket);
 
-export function useSocket(): ClientSocket {
+export function useSocket() {
   const [hasConnected, setHasConnected] = useState(false);
   const socket = useContext(SocketContext);
 
@@ -18,5 +18,8 @@ export function useSocket(): ClientSocket {
       });
   });
 
-  return socket;
+  return {
+    socket,
+    id: socket.id,
+  };
 }

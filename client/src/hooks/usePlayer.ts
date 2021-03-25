@@ -20,11 +20,11 @@ const initialState: UsePlayerResult = {
 export default function usePlayer(
   playerId: Player["socketId"]
 ): UsePlayerResult {
-  const socket = useSocket();
+  const { socket } = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
   useEffect(() => {
-    socket.emit(ClientEvent.GET_PLAYER, playerId);
+    playerId && socket.emit(ClientEvent.GET_PLAYER, playerId);
   }, [socket, playerId]);
 
   useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {

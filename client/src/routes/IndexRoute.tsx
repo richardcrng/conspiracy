@@ -9,7 +9,7 @@ import {
 } from "../types/event.types";
 
 function IndexRoute() {
-  const socket = useSocket();
+  const { socket } = useSocket();
   const history = useHistory();
 
   useEffect(() => {

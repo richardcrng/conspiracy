@@ -1,10 +1,16 @@
 import { useParams } from "react-router";
 import useGame from "../hooks/useGame";
+import usePlayer from "../hooks/usePlayer";
+import { useSocket } from "../socket";
 
 function GameRoute() {
   const { gameId } = useParams<{ gameId: string }>();
+  const { socket, id } = useSocket();
 
   const { game, loading, error } = useGame(gameId);
+  const { player } = usePlayer(id);
+
+  console.log(player);
 
   return (
     <>

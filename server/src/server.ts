@@ -42,6 +42,13 @@ io.on("connection", (socket: ServerSocket) => {
       : socket.emit(ServerEvent.GAME_NOT_FOUND);
   });
 
+  socket.on(ClientEvent.GET_PLAYER, (playerId) => {
+    const player = players[playerId];
+    player
+      ? socket.emit(ServerEvent.PLAYER_GOTTEN, player)
+      : socket.emit(ServerEvent.PLAYER_NOT_FOUND);
+  });
+
   socket.on(ClientEvent.JOIN_GAME, (e) => {
     const game = games[e.gameId];
     if (game) {
