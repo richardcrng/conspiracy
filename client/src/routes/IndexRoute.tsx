@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useSocket } from '../socket';
-import { CreateGameEvent, GameCreatedEvent, SocketEvent } from "../types/event.types";
+import { ClientEvent, CreateGameEvent, GameCreatedEvent, ServerEvent } from "../types/event.types";
 
 function IndexRoute() {
   const socket = useSocket();
@@ -12,19 +12,19 @@ function IndexRoute() {
       history.push(`/game/${data.id}`)
     };
 
-    socket.on(SocketEvent.GAME_CREATED, listener);
+    socket.on(ServerEvent.GAME_CREATED, listener);
     
     return function cleanup() {
-      socket.off(SocketEvent.GAME_CREATED, listener)
+      socket.off(ServerEvent.GAME_CREATED, listener)
     }
-  }, [socket]);
+  }, [history, socket]);
 
   const handleNewGame = () => {
     const data: CreateGameEvent = {
       playerName: "Richard",
       socketId: socket.id,
     };
-    socket.emit(SocketEvent.CREATE_GAME, data);
+    socket.emit(ClientEvent.CREATE_GAME, data);
   };
 
   return (
