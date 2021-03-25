@@ -6,9 +6,9 @@ import {
   ServerSocket,
 } from "../../client/src/types/event.types";
 import app from "./express";
-import { createGame } from "./utils";
 import { games, getGameById, getPlayer } from "./db";
 import { GameStatus, Player } from "../../client/src/types/game.types";
+import { createGame, joinPlayerToGame, startGame } from "./controllers";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -21,10 +21,7 @@ const io = new Server(httpServer, {
 io.on("connection", (socket: ServerSocket) => {
   socket.on(ClientEvent.CREATE_GAME, (e) => {
     const createdGame = createGame(e);
-    games[createdGame.id] = createdGame;
     socket.emit(ServerEvent.GAME_CREATED, createdGame);
-    // socket should join the room for the created game
-    socket.join(createdGame.id);
   });
 
   socket.on(ClientEvent.GET_GAME, (gameId) => {
@@ -35,28 +32,15 @@ io.on("connection", (socket: ServerSocket) => {
   });
 
   socket.on(ClientEvent.JOIN_GAME, (gameId, playerData) => {
-    const game = getGameById(gameId);
-    if (game) {
-      const player: Player = {
-        ...playerData,
-        gameId,
-      };
-      game.players[playerData.socketId] = player;
-      // socket should join the room for the created game
-      socket.join(game.id);
-      // socket.emit(ServerEvent.GAME_UPDATED, game.id, game);
-      io.to(gameId).emit(ServerEvent.GAME_UPDATED, game.id, game);
-      socket.emit(ServerEvent.PLAYER_UPDATED, playerData.socketId, player);
-    } else {
-      socket.emit(ServerEvent.REDIRECT_TO_LOBBY);
-    }
+    const [player, game] = joinPlayerToGame(gameId, playerData);
+    // socket.join(game.id);
+    io.emit(ServerEvent.GAME_UPDATED, game.id, game);
+    io.emit(ServerEvent.PLAYER_UPDATED, playerData.socketId, player);
   });
 
   socket.on(ClientEvent.START_GAME, (gameId) => {
-    console.log("received start event");
-    const game = getGameById(gameId);
-    game.status = GameStatus.STARTED;
-    io.to(game.id).emit(ServerEvent.GAME_UPDATED, game.id, game);
+    const game = startGame(gameId);
+    io.emit(ServerEvent.GAME_UPDATED, game.id, game);
   });
 
   socket.on(ClientEvent.GET_PLAYER, (gameId, playerId) => {
@@ -69,7 +53,7 @@ io.on("connection", (socket: ServerSocket) => {
   socket.on(ClientEvent.UPDATE_PLAYER, (gameId, playerData) => {
     const game = getGameById(gameId);
     const extantPlayer = game?.players[playerData.socketId];
-    if (extantPlayer) {
+    if (game && extantPlayer) {
       const resultantPlayer = Object.assign(extantPlayer, playerData);
       game.players[playerData.socketId] = resultantPlayer;
       socket.emit(
