@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import PlayerNamer from "../components/atoms/PlayerNamer";
 import GameLobby from "../components/organisms/GameLobby";
 import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
@@ -13,51 +14,39 @@ function GameRoute() {
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
 
-  const [inputText, setInputText] = useState("");
-
   if (!player.loading && !player.data?.name) {
     return (
+      <PlayerNamer
+        handleSetName={(name) => {
+          if (player.data) {
+            // player is in game, so update
+            socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
+              socketId: socket.id,
+              name,
+              gameId,
+            });
+          } else {
+            // player not in game, so join
+            socket.emit(ClientEvent.JOIN_GAME, gameId, {
+              socketId: socket.id,
+              name,
+            });
+          }
+        }}
+      />
+    );
+  } else
+    return (
       <>
-        <input
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-        <button
-          onClick={() => {
-            if (player.data) {
-              // player is in game, so update
-              socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
-                socketId: socket.id,
-                name: inputText,
-                gameId,
-              });
-            } else {
-              console.log("joining game");
-              // player not in game, so join
-              socket.emit(ClientEvent.JOIN_GAME, gameId, {
-                socketId: socket.id,
-                name: inputText,
-              });
-            }
-          }}
-        >
-          Set player name
-        </button>
+        {game.loading && <p>Loading...</p>}
+        {game.data && (
+          <GameLobby
+            gameId={game.data.id}
+            players={Object.values(game.data.players)}
+          />
+        )}
       </>
     );
-  }
-
-  return (
-    <>
-      {game.loading && <p>Loading...</p>}
-      {game.data && (
-        <GameLobby
-          gameId={game.data.id}
-          players={Object.values(game.data.players)}
-        />
-      )}
-    </>
-  );
 }
 
 export default GameRoute;
