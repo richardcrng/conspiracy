@@ -10,6 +10,10 @@ function GameRoute() {
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
 
+  if (!player.loading && !player.data?.name) {
+    return <p>Need to set your player name</p>;
+  }
+
   return (
     <>
       <h1>Game id: {gameId}</h1>
