@@ -5,19 +5,18 @@ import { useSocket } from "../socket";
 
 function GameRoute() {
   const { gameId } = useParams<{ gameId: string }>();
-  const { socket, id } = useSocket();
+  const socket = useSocket();
 
-  const { game, loading, error } = useGame(gameId);
-  const { player } = usePlayer(id);
-
-  console.log(player);
+  const game = useGame(gameId);
+  const player = usePlayer(socket.id);
 
   return (
     <>
       <h1>Game id: {gameId}</h1>
-      {loading && <p>Loading...</p>}
-      {game && <pre>{JSON.stringify(game, null, 2)}</pre>}
-      {error && <p>Error: {error}</p>}
+      {player.loading || (game.loading && <p>Loading...</p>)}
+      {game.data && <pre>{JSON.stringify(game.data, null, 2)}</pre>}
+      {player.error ||
+        (game.error && <p>Error: {[player.error, game.error].join(", ")}</p>)}
     </>
   );
 }

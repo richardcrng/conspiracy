@@ -18,8 +18,5 @@ export function useSocket() {
       });
   });
 
-  return {
-    socket,
-    id: socket.id,
-  };
+  return socket;
 }

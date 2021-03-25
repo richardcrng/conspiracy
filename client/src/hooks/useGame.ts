@@ -6,19 +6,19 @@ import { GameBase } from "../types/game.types";
 import useSocketListener from "./useSocketListener";
 
 interface UseGameResult {
-  game: GameBase | undefined;
+  data: GameBase | undefined;
   loading: boolean;
   error: string | undefined;
 }
 
 const initialState: UseGameResult = {
   loading: true,
-  game: undefined,
+  data: undefined,
   error: undefined,
 };
 
 export default function useGame(gameId: GameBase["id"]): UseGameResult {
-  const { socket } = useSocket();
+  const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function useGame(gameId: GameBase["id"]): UseGameResult {
 
   useSocketListener(ServerEvent.GAME_GOTTEN, (game) => {
     dispatch(
-      bundle([actions.game.create.update(game), actions.loading.create.off()])
+      bundle([actions.data.create.update(game), actions.loading.create.off()])
     );
   });
 

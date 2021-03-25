@@ -6,21 +6,21 @@ import { Player } from "../types/game.types";
 import useSocketListener from "./useSocketListener";
 
 interface UsePlayerResult {
-  player: Player | undefined;
+  data: Player | undefined;
   loading: boolean;
   error: string | undefined;
 }
 
 const initialState: UsePlayerResult = {
   loading: true,
-  player: undefined,
+  data: undefined,
   error: undefined,
 };
 
 export default function usePlayer(
   playerId: Player["socketId"]
 ): UsePlayerResult {
-  const { socket } = useSocket();
+  const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
   useEffect(() => {
@@ -29,10 +29,7 @@ export default function usePlayer(
 
   useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {
     dispatch(
-      bundle([
-        actions.player.create.update(player),
-        actions.loading.create.off(),
-      ])
+      bundle([actions.data.create.update(player), actions.loading.create.off()])
     );
   });
 

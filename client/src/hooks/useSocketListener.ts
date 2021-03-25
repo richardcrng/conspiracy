@@ -5,7 +5,7 @@ import { ServerEvent, ServerEventListeners } from "../types/event.types";
 export default function useSocketListener<
   ListenEvent extends ServerEvent = ServerEvent
 >(event: ListenEvent, listener: ServerEventListeners[ListenEvent]): void {
-  const { socket } = useSocket();
+  const socket = useSocket();
 
   useEffect(() => {
     // @ts-ignore
