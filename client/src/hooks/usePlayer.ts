@@ -18,19 +18,30 @@ const initialState: UsePlayerResult = {
 };
 
 export default function usePlayer(
-  playerId: Player["socketId"]
+  playerId?: Player["socketId"]
 ): UsePlayerResult {
   const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
-  useEffect(() => {
-    playerId && socket.emit(ClientEvent.GET_PLAYER, playerId);
-  }, [socket, playerId]);
+  const playerSocketId = playerId ?? socket.id;
 
-  useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {
+  const setPlayer = (player: Player) =>
     dispatch(
       bundle([actions.data.create.update(player), actions.loading.create.off()])
     );
+
+  useEffect(() => {
+    playerSocketId && socket.emit(ClientEvent.GET_PLAYER, playerSocketId);
+  }, [socket, playerSocketId]);
+
+  useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {
+    setPlayer(player);
+  });
+
+  useSocketListener(ServerEvent.PLAYER_UPDATED, (player) => {
+    if (player.socketId === playerSocketId) {
+      setPlayer(player);
+    }
   });
 
   useSocketListener(ServerEvent.PLAYER_NOT_FOUND, () => {

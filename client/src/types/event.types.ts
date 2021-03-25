@@ -16,6 +16,7 @@ export enum ClientEvent {
   CREATE_GAME = "create-game",
   GET_GAME = "get-game",
   GET_PLAYER = "get-player",
+  NAME_PLAYER = "name-player",
   JOIN_GAME = "join",
 }
 
@@ -26,6 +27,7 @@ export enum ServerEvent {
   GAME_NOT_FOUND = "game-not-found",
   PLAYER_GOTTEN = "player-gotten",
   PLAYER_NOT_FOUND = "player-not-found",
+  PLAYER_UPDATED = "player-updated",
   REDIRECT_TO_LOBBY = "redirect-to-lobby",
 }
 
@@ -34,6 +36,7 @@ export type ClientEventListeners = {
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.GET_PLAYER]: (playerId: string) => void;
   [ClientEvent.JOIN_GAME]: (e: JoinGameEvent) => void;
+  [ClientEvent.NAME_PLAYER]: (playerId: string, name: string) => void;
 };
 
 export type ServerEventListeners = {
@@ -42,6 +45,7 @@ export type ServerEventListeners = {
   [ServerEvent.GAME_JOINED]: (e: GameJoinedEvent) => void;
   [ServerEvent.GAME_NOT_FOUND]: () => void;
   [ServerEvent.PLAYER_GOTTEN]: (player: Player) => void;
+  [ServerEvent.PLAYER_UPDATED]: (player: Player) => void;
   [ServerEvent.PLAYER_NOT_FOUND]: () => void;
   [ServerEvent.REDIRECT_TO_LOBBY]: () => void;
 };
