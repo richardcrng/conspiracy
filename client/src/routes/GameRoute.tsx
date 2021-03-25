@@ -51,9 +51,16 @@ function GameRoute() {
     <>
       <h1>Game id: {gameId}</h1>
       {player.loading || (game.loading && <p>Loading...</p>)}
-      {game.data && <pre>{JSON.stringify(game.data, null, 2)}</pre>}
-      {player.error ||
-        (game.error && <p>Error: {[player.error, game.error].join(", ")}</p>)}
+      {game.data && (
+        <ul>
+          {Object.values(game.data.players).map((player) => (
+            <li key={player.socketId}>
+              {player.name}
+              {player.isHost && " (host)"}
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

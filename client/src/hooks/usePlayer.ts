@@ -28,7 +28,11 @@ export default function usePlayer(
 
   const setPlayer = (player: Player) =>
     dispatch(
-      bundle([actions.data.create.update(player), actions.loading.create.off()])
+      bundle([
+        actions.data.create.update(player),
+        actions.loading.create.off(),
+        actions.error.create.reset(),
+      ])
     );
 
   useEffect(() => {
