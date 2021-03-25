@@ -1,3 +1,4 @@
+import { ServerEvent, ServerSocket } from "../../client/src/types/event.types";
 import { GameBase, Player } from "../../client/src/types/game.types";
 // import { Socket } from "socket.io";
 
@@ -16,4 +17,21 @@ export const getPlayer = (
 ): Player | undefined => {
   const game = getGameById(gameId);
   return game?.players[playerId];
+};
+
+export const updatePlayer = (
+  socket: ServerSocket,
+  gameId: string,
+  playerData: Player
+) => {
+  const game = getGameById(gameId);
+  const extantPlayer = game.players[playerData.socketId];
+  const updatedPlayer = Object.assign(extantPlayer, playerData);
+  game.players[playerData.socketId] = updatedPlayer;
+  socket.emit(
+    ServerEvent.PLAYER_UPDATED,
+    updatedPlayer.socketId,
+    updatedPlayer
+  );
+  socket.emit(ServerEvent.GAME_UPDATED, game.id, game);
 };

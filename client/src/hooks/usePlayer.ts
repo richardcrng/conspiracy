@@ -37,14 +37,12 @@ export default function usePlayer(
       socket.emit(ClientEvent.GET_PLAYER, gameId, playerSocketId);
   }, [socket, gameId, playerSocketId]);
 
-  useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {
-    setPlayer(player);
+  useSocketListener(ServerEvent.PLAYER_GOTTEN, (id, player) => {
+    id === playerSocketId && setPlayer(player);
   });
 
-  useSocketListener(ServerEvent.PLAYER_UPDATED, (player) => {
-    if (player.socketId === playerSocketId) {
-      setPlayer(player);
-    }
+  useSocketListener(ServerEvent.PLAYER_UPDATED, (id, player) => {
+    id === playerSocketId && setPlayer(player);
   });
 
   useSocketListener(ServerEvent.PLAYER_NOT_FOUND, () => {

@@ -11,6 +11,7 @@ function GameRoute() {
 
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
+  console.log(player);
 
   const [inputText, setInputText] = useState("");
 
@@ -23,11 +24,21 @@ function GameRoute() {
         />
         <button
           onClick={() => {
-            socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
-              socketId: socket.id,
-              name: inputText,
-              gameId,
-            });
+            if (player.data) {
+              // player is in game, so update
+              socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
+                socketId: socket.id,
+                name: inputText,
+                gameId,
+              });
+            } else {
+              console.log("joining game");
+              // player not in game, so join
+              socket.emit(ClientEvent.JOIN_GAME, gameId, {
+                socketId: socket.id,
+                name: inputText,
+              });
+            }
           }}
         >
           Set player name

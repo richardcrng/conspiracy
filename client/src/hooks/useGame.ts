@@ -31,12 +31,12 @@ export default function useGame(gameId: GameBase["id"]): UseGameResult {
     socket.emit(ClientEvent.GET_GAME, gameId);
   }, [socket, gameId]);
 
-  useSocketListener(ServerEvent.GAME_GOTTEN, (game) => {
-    setGame(game);
+  useSocketListener(ServerEvent.GAME_GOTTEN, (updatedId, game) => {
+    updatedId === gameId && setGame(game);
   });
 
-  useSocketListener(ServerEvent.GAME_UPDATED, (game) => {
-    setGame(game);
+  useSocketListener(ServerEvent.GAME_UPDATED, (updatedId, game) => {
+    updatedId === gameId && setGame(game);
   });
 
   useSocketListener(ServerEvent.GAME_NOT_FOUND, () => {

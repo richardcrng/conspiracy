@@ -36,18 +36,18 @@ export type ClientEventListeners = {
   [ClientEvent.CREATE_GAME]: (e: CreateGameEvent) => void;
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
-  [ClientEvent.JOIN_GAME]: (e: JoinGameEvent) => void;
+  [ClientEvent.JOIN_GAME]: (gameId: string, player: Player) => void;
   [ClientEvent.UPDATE_PLAYER]: (gameId: string, player: Player) => void;
 };
 
 export type ServerEventListeners = {
   [ServerEvent.GAME_CREATED]: (e: GameCreatedEvent) => void;
-  [ServerEvent.GAME_GOTTEN]: (game: GameBase) => void;
+  [ServerEvent.GAME_GOTTEN]: (gameId: string, game: GameBase) => void;
   [ServerEvent.GAME_JOINED]: (e: GameJoinedEvent) => void;
   [ServerEvent.GAME_NOT_FOUND]: () => void;
-  [ServerEvent.GAME_UPDATED]: (game: GameBase) => void;
-  [ServerEvent.PLAYER_GOTTEN]: (player: Player) => void;
-  [ServerEvent.PLAYER_UPDATED]: (player: Player) => void;
+  [ServerEvent.GAME_UPDATED]: (gameId: string, game: GameBase) => void;
+  [ServerEvent.PLAYER_GOTTEN]: (playerId: string, player: Player) => void;
+  [ServerEvent.PLAYER_UPDATED]: (playerId: string, player: Player) => void;
   [ServerEvent.PLAYER_NOT_FOUND]: () => void;
   [ServerEvent.REDIRECT_TO_LOBBY]: () => void;
 };
