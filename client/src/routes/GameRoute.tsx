@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import GameLobby from "../components/organisms/GameLobby";
 import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
 import { useSocket } from "../socket";
@@ -11,7 +12,6 @@ function GameRoute() {
 
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
-  console.log(player);
 
   const [inputText, setInputText] = useState("");
 
@@ -49,17 +49,12 @@ function GameRoute() {
 
   return (
     <>
-      <h1>Game id: {gameId}</h1>
-      {player.loading || (game.loading && <p>Loading...</p>)}
+      {game.loading && <p>Loading...</p>}
       {game.data && (
-        <ul>
-          {Object.values(game.data.players).map((player) => (
-            <li key={player.socketId}>
-              {player.name}
-              {player.isHost && " (host)"}
-            </li>
-          ))}
-        </ul>
+        <GameLobby
+          gameId={game.data.id}
+          players={Object.values(game.data.players)}
+        />
       )}
     </>
   );
