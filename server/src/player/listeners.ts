@@ -2,9 +2,9 @@ import {
   ClientEvent,
   ServerEvent,
   ServerSocket,
-} from "../../client/src/types/event.types";
+} from "../../../client/src/types/event.types";
 import { Server } from "socket.io";
-import { getPlayer } from "./db";
+import { getPlayer } from "../db";
 import { updatePlayer } from "./controllers";
 
 export const addPlayerListeners = (socket: ServerSocket, io: Server): void => {
