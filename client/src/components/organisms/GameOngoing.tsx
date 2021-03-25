@@ -1,17 +1,21 @@
 import {
   conspiracyVictimName,
+  getVote,
   hasVoted,
   isConspiracyMember,
 } from "../../models/game";
-import { Game, Player } from "../../types/game.types";
+import { Game, Player, Vote } from "../../types/game.types";
 import PlayerList from "../atoms/PlayerList";
 
 interface Props {
   game: Game;
   player: Player;
+  handleVote(vote: Vote | null): void;
 }
 
-function GameOngoing({ game, player }: Props) {
+function GameOngoing({ game, player, handleVote }: Props) {
+  const playerVote = getVote(game, player.socketId);
+
   return (
     <>
       <p>
@@ -30,6 +34,14 @@ function GameOngoing({ game, player }: Props) {
           </>
         )}
       />
+      <p>{playerVote ? `Your vote: ${playerVote}` : "You have not voted"}</p>
+      <button onClick={() => handleVote(Vote.CONSPIRACY)}>
+        Vote: Conspiracy
+      </button>
+      <button onClick={() => handleVote(Vote.NO_CONSPIRACY)}>
+        Vote: No Conspiracy
+      </button>
+      <button onClick={() => handleVote(null)}>Clear vote</button>
     </>
   );
 }

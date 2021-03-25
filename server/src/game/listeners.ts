@@ -2,13 +2,13 @@ import {
   ClientEvent,
   ServerEvent,
   ServerSocket,
+  ServerIO,
 } from "../../../client/src/types/event.types";
-import { Server } from "socket.io";
 import { createGame, startGame } from "./controllers";
 import { getGameById } from "../db";
 import { joinPlayerToGame } from "../player/controllers";
 
-export const addGameListeners = (socket: ServerSocket, io: Server): void => {
+export const addGameListeners = (socket: ServerSocket, io: ServerIO): void => {
   socket.on(ClientEvent.CREATE_GAME, (e) => {
     const createdGame = createGame(e);
     socket.emit(ServerEvent.GAME_CREATED, createdGame);

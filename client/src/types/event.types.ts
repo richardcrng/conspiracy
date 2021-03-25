@@ -1,6 +1,6 @@
 import { Socket as TClientSocket } from "socket.io-client";
-import { Socket as TServerSocket } from "socket.io";
-import { GameBase, Player } from "./game.types";
+import { Socket as TServerSocket, Server as TServer } from "socket.io";
+import { GameBase, Player, Vote } from "./game.types";
 
 export type ClientSocket = TClientSocket<
   ServerEventListeners,
@@ -12,11 +12,14 @@ export type ServerSocket = TServerSocket<
   ServerEventListeners
 >;
 
+export type ServerIO = TServer<ClientEventListeners, ServerEventListeners>;
+
 export enum ClientEvent {
   CREATE_GAME = "create-game",
   GET_GAME = "get-game",
   GET_PLAYER = "get-player",
   JOIN_GAME = "join",
+  MAKE_VOTE = "make-vote",
   START_GAME = "start-game",
   UPDATE_PLAYER = "update-player",
 }
@@ -38,6 +41,11 @@ export type ClientEventListeners = {
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
   [ClientEvent.JOIN_GAME]: (gameId: string, player: Player) => void;
+  [ClientEvent.MAKE_VOTE]: (
+    gameId: string,
+    playerId: string,
+    vote: Vote | null
+  ) => void;
   [ClientEvent.START_GAME]: (
     gameId: string,
     conspiracyProbability?: number

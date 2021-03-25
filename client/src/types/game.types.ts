@@ -15,6 +15,11 @@ export type Game = GameBase | GameInLobby | GameOngoing;
 
 export type GameOngoing = GameConspiracyOngoing | GameNoConspiracyOngoing;
 
+export enum Vote {
+  CONSPIRACY = "conspiracy",
+  NO_CONSPIRACY = "no conspiracy",
+}
+
 export interface GameBase {
   id: string;
   players: {
@@ -22,7 +27,7 @@ export interface GameBase {
   };
   status: GameStatus;
   conspiracyTarget?: Player["name"] | null;
-  votes?: { [K in keyof GameBase["players"]]: Player["name"] };
+  votes?: { [K in keyof GameBase["players"]]: Vote };
 }
 
 export interface GameInLobby extends GameBase {
@@ -44,5 +49,5 @@ export interface GameConspiracyOngoing extends GameBase {
 export interface OngoingGame extends GameBase {
   status: GameStatus.STARTED;
   conspiracyTarget: Player["name"] | null;
-  votes: { [K in keyof GameBase["players"]]: Player["name"] };
+  votes: { [K in keyof GameBase["players"]]: Vote };
 }

@@ -1,4 +1,4 @@
-import { Game, GameBase } from "../types/game.types";
+import { Game, GameBase, Vote } from "../types/game.types";
 
 export const gameLobbyReadiness = (
   game: GameBase
@@ -30,5 +30,10 @@ export const isConspiracyVictim = (game: Game, playerId: string): boolean => {
   return hasConspiracy(game) && game.conspiracyTarget === playerId;
 };
 
+export const getVote = (game: Game, playerId: string): Vote | undefined => {
+  const votes = game.votes || {};
+  return votes[playerId];
+};
+
 export const hasVoted = (game: Game, playerId: string): boolean =>
-  !!(game.votes && game.votes[playerId]);
+  !!getVote(game, playerId);

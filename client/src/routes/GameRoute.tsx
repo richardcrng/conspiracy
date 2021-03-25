@@ -57,6 +57,14 @@ function GameRoute() {
                 customProbability
               );
             }}
+            handleVote={(vote) => {
+              socket.emit(
+                ClientEvent.MAKE_VOTE,
+                game.data!.id,
+                socket.id,
+                vote
+              );
+            }}
             players={Object.values(game.data.players)}
             player={player.data}
           />
