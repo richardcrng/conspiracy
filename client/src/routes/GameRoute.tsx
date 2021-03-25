@@ -47,8 +47,12 @@ function GameRoute() {
         {game.data && player.data && (
           <GamePage
             game={game.data}
-            handleStartGame={() => {
-              socket.emit(ClientEvent.START_GAME, game.data!.id);
+            handleStartGame={(customProbability) => {
+              socket.emit(
+                ClientEvent.START_GAME,
+                game.data!.id,
+                customProbability
+              );
             }}
             players={Object.values(game.data.players)}
             player={player.data}

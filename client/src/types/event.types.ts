@@ -38,7 +38,10 @@ export type ClientEventListeners = {
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
   [ClientEvent.JOIN_GAME]: (gameId: string, player: Player) => void;
-  [ClientEvent.START_GAME]: (gameId: string) => void;
+  [ClientEvent.START_GAME]: (
+    gameId: string,
+    conspiracyProbability?: number
+  ) => void;
   [ClientEvent.UPDATE_PLAYER]: (gameId: string, player: Player) => void;
 };
 

@@ -8,10 +8,15 @@ import {
 import { games, getGameById } from "../db";
 import { generateRandomGameId } from "../utils";
 
-const generateConspiracyState = (game: Game): void => {
+const generateConspiracyState = (
+  game: Game,
+  customProbability?: number
+): void => {
   const players = Object.values(game.players);
   const nPlayers = players.length;
-  const isConspiracy = Math.random() > nPlayers / (nPlayers + 1);
+  const probabilityOfConspiracy =
+    customProbability ?? nPlayers / (nPlayers + 1);
+  const isConspiracy = Math.random() < probabilityOfConspiracy;
   if (isConspiracy) {
     const conspiracyTarget = sample(players)!;
     game.conspiracyTarget = conspiracyTarget.socketId;
@@ -38,11 +43,14 @@ export const createGame = (data: CreateGameEvent): GameBase => {
   return game;
 };
 
-export const startGame = (gameId: string): GameBase => {
+export const startGame = (
+  gameId: string,
+  customProbability?: number
+): GameBase => {
   const game = getGameById(gameId);
   if (game) {
     game.status = GameStatus.STARTED;
-    generateConspiracyState(game);
+    generateConspiracyState(game, customProbability);
     return game;
   } else {
     throw new Error("Couldn't find game");

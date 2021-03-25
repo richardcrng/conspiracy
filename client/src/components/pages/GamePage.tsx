@@ -4,7 +4,7 @@ import { conspiracyVictimName, isConspiracyMember } from "../../models/game";
 
 interface Props {
   game: GameBase;
-  handleStartGame(): void;
+  handleStartGame(customProbability?: number): void;
   players: Player[];
   player: Player;
 }

@@ -1,25 +1,58 @@
+import { useState } from "react";
 import { gameLobbyReadiness } from "../../models/game";
 import { GameBase, Player } from "../../types/game.types";
 import PlayerList from "../atoms/PlayerList";
 
 interface Props {
   game: GameBase;
-  handleStartGame(): void;
+  handleStartGame(probabilityOfConspiracy?: number): void;
   players: Player[];
   player: Player;
 }
 
 function GameLobby({ game, handleStartGame, players, player }: Props) {
   const readiness = gameLobbyReadiness(game);
+  const [customProbability, setCustomProbability] = useState("");
+
+  const imputedProbability = isNaN(Number(customProbability))
+    ? undefined
+    : Number(customProbability);
+
+  const illegalProbability =
+    Number(customProbability) > 100 || Number(customProbability) < 0;
+
+  const disableStart = !readiness.isReady || illegalProbability;
 
   return (
     <>
       <h1>Game id: {game.id}</h1>
+      {player.isHost && (
+        <>
+          <p>
+            As host, if you'd like, you can set a custom probability of
+            conspiracy (0-100), otherwise we'll use a mathematically balanced
+            probability (where the probability of a conspiracy increases with
+            the number of players)
+          </p>
+          <input
+            value={customProbability}
+            onChange={(e) => setCustomProbability(e.target.value)}
+          />
+          {illegalProbability && <p>That's an illegal probability...</p>}
+        </>
+      )}
       <PlayerList players={players} />
       {player.isHost ? (
-        <button disabled={!readiness.isReady} onClick={handleStartGame}>
-          Start game
-        </button>
+        <>
+          <button
+            disabled={disableStart}
+            onClick={() => {
+              handleStartGame(imputedProbability);
+            }}
+          >
+            Start game
+          </button>
+        </>
       ) : (
         <p>Waiting for the host to start the game</p>
       )}
