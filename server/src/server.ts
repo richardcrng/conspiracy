@@ -21,6 +21,24 @@ io.on("connection", (socket: ServerSocket) => {
     // socket should join the room for the created game
     socket.join(createdGame.id)
   })
+
+  socket.on(ClientEvent.GET_GAME, (gameId) => {
+    const game = games[gameId];
+    if (game) {
+      socket.emit(ServerEvent.GAME_GOTTEN, game);
+    } else {
+      socket.emit(ServerEvent.REDIRECT_TO_LOBBY);
+    }
+  })
+
+  socket.on(ClientEvent.JOIN_GAME, (e) => {
+    const game = games[e.gameId]
+    if (game) {
+      socket.emit(ServerEvent.GAME_JOINED, { game });
+    } else {
+      socket.emit(ServerEvent.REDIRECT_TO_LOBBY)
+    }
+  })
 });
 
 export default httpServer
