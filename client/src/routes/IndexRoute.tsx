@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { useHistory } from "react-router";
 import useSocketListener from "../hooks/useSocketListener";
 import { useSocket } from "../socket";
 import {
   ClientEvent,
   CreateGameEvent,
-  GameCreatedEvent,
   ServerEvent,
 } from "../types/event.types";
 
