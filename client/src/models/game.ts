@@ -1,4 +1,4 @@
-import { GameBase } from "../types/game.types";
+import { Game, GameBase } from "../types/game.types";
 
 export const gameLobbyReadiness = (
   game: GameBase
@@ -12,4 +12,20 @@ export const gameLobbyReadiness = (
   } else {
     return { isReady: true };
   }
+};
+
+export const conspiracyVictimName = (game: Game): string | undefined => {
+  if (hasConspiracy(game)) {
+    return game.players[game.conspiracyTarget!].name;
+  }
+};
+
+export const hasConspiracy = (game: Game) => !!game.conspiracyTarget;
+
+export const isConspiracyMember = (game: Game, playerId: string) => {
+  return hasConspiracy(game) && !isConspiracyVictim(game, playerId);
+};
+
+export const isConspiracyVictim = (game: Game, playerId: string): boolean => {
+  return hasConspiracy(game) && game.conspiracyTarget === playerId;
 };

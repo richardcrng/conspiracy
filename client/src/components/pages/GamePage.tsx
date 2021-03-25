@@ -1,5 +1,6 @@
 import { GameBase, GameStatus, Player } from "../../types/game.types";
 import GameLobby from "../organisms/GameLobby";
+import { conspiracyVictimName, isConspiracyMember } from "../../models/game";
 
 interface Props {
   game: GameBase;
@@ -12,7 +13,13 @@ function GamePage({ game, handleStartGame, players, player }: Props) {
   if (game.status === GameStatus.LOBBY) {
     return <GameLobby {...{ game, handleStartGame, players, player }} />;
   } else {
-    return <p>Started the game!!!!</p>;
+    return (
+      <p>
+        {isConspiracyMember(game, player.socketId)
+          ? `You are in a conspiracy against ${conspiracyVictimName(game)}`
+          : "You are innocent"}
+      </p>
+    );
   }
 }
 

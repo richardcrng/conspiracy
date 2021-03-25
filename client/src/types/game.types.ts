@@ -11,7 +11,9 @@ export interface Player {
   isHost?: boolean;
 }
 
-export type Game = GameBase | OngoingGame;
+export type Game = GameBase | GameInLobby | GameOngoing;
+
+export type GameOngoing = GameConspiracyOngoing | GameNoConspiracyOngoing;
 
 export interface GameBase {
   id: string;
@@ -21,6 +23,22 @@ export interface GameBase {
   status: GameStatus;
   conspiracyTarget?: Player["name"] | null;
   votes?: { [K in keyof GameBase["players"]]: Player["name"] };
+}
+
+export interface GameInLobby extends GameBase {
+  status: GameStatus.LOBBY;
+  conspiracyTarget: never;
+  votes: never;
+}
+
+export interface GameNoConspiracyOngoing extends GameBase {
+  conspiracyTarget: null;
+  status: GameStatus.STARTED;
+}
+
+export interface GameConspiracyOngoing extends GameBase {
+  conspiracyTarget: Player["name"];
+  status: GameStatus.STARTED;
 }
 
 export interface OngoingGame extends GameBase {
