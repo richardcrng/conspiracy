@@ -18,22 +18,3 @@ export const getPlayer = (
   const game = getGameById(gameId);
   return game?.players[playerId];
 };
-
-export const updatePlayer = (
-  socket: ServerSocket,
-  gameId: string,
-  playerData: Player
-) => {
-  const game = getGameById(gameId);
-  if (game) {
-    const extantPlayer = game.players[playerData.socketId];
-    const updatedPlayer = Object.assign(extantPlayer, playerData);
-    game.players[playerData.socketId] = updatedPlayer;
-    socket.emit(
-      ServerEvent.PLAYER_UPDATED,
-      updatedPlayer.socketId,
-      updatedPlayer
-    );
-    socket.emit(ServerEvent.GAME_UPDATED, game.id, game);
-  }
-};

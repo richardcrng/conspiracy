@@ -51,3 +51,18 @@ export const startGame = (gameId: string): GameBase => {
     throw new Error("Couldn't find game");
   }
 };
+
+export const updatePlayer = (
+  gameId: string,
+  playerData: Player
+): [Player, GameBase] => {
+  const game = getGameById(gameId);
+  const extantPlayer = game?.players[playerData.socketId];
+  if (game && extantPlayer) {
+    const resultantPlayer = Object.assign(extantPlayer, playerData);
+    game.players[playerData.socketId] = resultantPlayer;
+    return [resultantPlayer, game];
+  } else {
+    throw new Error("Couldn't update player");
+  }
+};
