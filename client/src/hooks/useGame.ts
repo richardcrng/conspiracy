@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRiducer } from 'riduce';
 import { useSocket } from "../socket";
 import { ClientEvent, ServerEvent } from "../types/event.types";
@@ -24,16 +24,6 @@ export default function useGame(gameId: GameBase['id']): UseGameResult {
   useEffect(() => {
     socket.emit(ClientEvent.GET_GAME, gameId)
   }, [socket, gameId])
-
-  // const listener = (game: GameBase) => {
-  //   dispatch(actions.game.create.update(game));
-  // };
-
-  // socket.on(ServerEvent.GAME_GOTTEN, listener);
-
-  // return function cleanup() {
-  //   socket.off(ServerEvent.GAME_GOTTEN, listener);
-  // };
 
   useSocketListener(ServerEvent.GAME_GOTTEN, (game) => {
     dispatch(actions.game.create.update(game))
