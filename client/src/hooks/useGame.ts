@@ -21,14 +21,22 @@ export default function useGame(gameId: GameBase["id"]): UseGameResult {
   const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
+  const setGame = (game: GameBase) => {
+    dispatch(
+      bundle([actions.data.create.update(game), actions.loading.create.off()])
+    );
+  };
+
   useEffect(() => {
     socket.emit(ClientEvent.GET_GAME, gameId);
   }, [socket, gameId]);
 
   useSocketListener(ServerEvent.GAME_GOTTEN, (game) => {
-    dispatch(
-      bundle([actions.data.create.update(game), actions.loading.create.off()])
-    );
+    setGame(game);
+  });
+
+  useSocketListener(ServerEvent.GAME_UPDATED, (game) => {
+    setGame(game);
   });
 
   useSocketListener(ServerEvent.GAME_NOT_FOUND, () => {

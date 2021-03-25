@@ -47,6 +47,7 @@ io.on("connection", (socket: ServerSocket) => {
       const resultantPlayer = Object.assign(extantPlayer, playerData);
       game.players[playerData.socketId] = resultantPlayer;
       socket.emit(ServerEvent.PLAYER_UPDATED, resultantPlayer);
+      socket.emit(ServerEvent.GAME_UPDATED, game);
     } else {
       socket.emit(ServerEvent.PLAYER_NOT_FOUND);
     }

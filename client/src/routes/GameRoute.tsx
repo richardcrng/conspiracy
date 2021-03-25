@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useParams } from "react-router";
 import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
 import { useSocket } from "../socket";
+import { ClientEvent } from "../types/event.types";
 
 function GameRoute() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -10,8 +12,28 @@ function GameRoute() {
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
 
+  const [inputText, setInputText] = useState("");
+
   if (!player.loading && !player.data?.name) {
-    return <p>Need to set your player name</p>;
+    return (
+      <>
+        <input
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
+              socketId: socket.id,
+              name: inputText,
+              gameId,
+            });
+          }}
+        >
+          Set player name
+        </button>
+      </>
+    );
   }
 
   return (

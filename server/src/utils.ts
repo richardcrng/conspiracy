@@ -2,13 +2,15 @@ import { CreateGameEvent } from "../../client/src/types/event.types";
 import { GameBase, GameStatus } from "../../client/src/types/game.types";
 
 export const createGame = (data: CreateGameEvent): GameBase => {
+  const gameId = generateRandomGameId();
   return {
-    id: generateRandomGameId(),
+    id: gameId,
     players: {
       [data.socketId]: {
         name: data.playerName,
         socketId: data.socketId,
         isHost: true,
+        gameId,
       },
     },
     status: GameStatus.LOBBY,

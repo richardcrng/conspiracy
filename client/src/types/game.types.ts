@@ -6,6 +6,7 @@ export enum GameStatus {
 
 export interface Player {
   socketId: string;
+  gameId: string;
   name?: string;
   isHost?: boolean;
 }
