@@ -29,3 +29,6 @@ export const isConspiracyMember = (game: Game, playerId: string) => {
 export const isConspiracyVictim = (game: Game, playerId: string): boolean => {
   return hasConspiracy(game) && game.conspiracyTarget === playerId;
 };
+
+export const hasVoted = (game: Game, playerId: string): boolean =>
+  !!(game.votes && game.votes[playerId]);

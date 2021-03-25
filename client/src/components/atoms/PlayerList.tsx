@@ -2,16 +2,21 @@ import { Player } from "../../types/game.types";
 
 interface Props {
   players: Player[];
+  renderPlayer?(player: Player): JSX.Element;
 }
 
-function PlayerList({ players }: Props) {
+const defaultRenderPlayer = (player: Player): JSX.Element => (
+  <>
+    {player.name}
+    {player.isHost && " (host)"}
+  </>
+);
+
+function PlayerList({ players, renderPlayer = defaultRenderPlayer }: Props) {
   return (
     <ul>
       {players.map((player) => (
-        <li key={player.socketId}>
-          {player.name}
-          {player.isHost && " (host)"}
-        </li>
+        <li key={player.socketId}>{renderPlayer(player)}</li>
       ))}
     </ul>
   );
