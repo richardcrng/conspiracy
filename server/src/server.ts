@@ -7,8 +7,7 @@ import {
 } from "../../client/src/types/event.types";
 import app from "./express";
 import { createGame } from "./utils";
-import { games, players } from "./db";
-import { Player } from "../../client/src/types/game.types";
+import { games, getGameById, getPlayer } from "./db";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -19,14 +18,6 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket: ServerSocket) => {
-  const playerId = socket.id;
-  const player: Player = { socketId: playerId };
-  players[player.socketId] = player;
-
-  socket.on("disconnect", () => {
-    delete players[playerId];
-  });
-
   socket.on(ClientEvent.CREATE_GAME, (e) => {
     const createdGame = createGame(e);
     games[createdGame.id] = createdGame;
@@ -36,31 +27,33 @@ io.on("connection", (socket: ServerSocket) => {
   });
 
   socket.on(ClientEvent.GET_GAME, (gameId) => {
-    const game = games[gameId];
+    const game = getGameById(gameId);
     game
       ? socket.emit(ServerEvent.GAME_GOTTEN, game)
       : socket.emit(ServerEvent.GAME_NOT_FOUND);
   });
 
-  socket.on(ClientEvent.GET_PLAYER, (playerId) => {
-    const player = players[playerId];
+  socket.on(ClientEvent.GET_PLAYER, (gameId, playerId) => {
+    const player = getPlayer(gameId, playerId);
     player
       ? socket.emit(ServerEvent.PLAYER_GOTTEN, player)
       : socket.emit(ServerEvent.PLAYER_NOT_FOUND);
   });
 
-  socket.on(ClientEvent.NAME_PLAYER, (playerId, name) => {
-    const player = players[playerId];
-    if (player) {
-      player.name = name;
-      socket.emit(ServerEvent.PLAYER_UPDATED, player);
+  socket.on(ClientEvent.UPDATE_PLAYER, (gameId, playerData) => {
+    const game = getGameById(gameId);
+    const extantPlayer = game?.players[playerData.socketId];
+    if (extantPlayer) {
+      const resultantPlayer = Object.assign(extantPlayer, playerData);
+      game.players[playerData.socketId] = resultantPlayer;
+      socket.emit(ServerEvent.PLAYER_UPDATED, resultantPlayer);
     } else {
       socket.emit(ServerEvent.PLAYER_NOT_FOUND);
     }
   });
 
   socket.on(ClientEvent.JOIN_GAME, (e) => {
-    const game = games[e.gameId];
+    const game = getGameById(e.gameId);
     if (game) {
       socket.emit(ServerEvent.GAME_JOINED, { game });
     } else {

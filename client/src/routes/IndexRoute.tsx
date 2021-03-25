@@ -13,13 +13,14 @@ function IndexRoute() {
   const socket = useSocket();
   const history = useHistory();
 
+  console.log(socket.id);
+
   useSocketListener(ServerEvent.GAME_CREATED, (data) => {
     history.push(`/game/${data.id}`);
   });
 
   const handleNewGame = () => {
     const data: CreateGameEvent = {
-      playerName: "Richard",
       socketId: socket.id,
     };
     socket.emit(ClientEvent.CREATE_GAME, data);

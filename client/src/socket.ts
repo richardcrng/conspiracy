@@ -4,6 +4,10 @@ import { ClientSocket } from "./types/event.types";
 
 export const socket: ClientSocket = io("localhost:4000");
 
+socket.onAny((eventName, ...rest) => {
+  console.log("event", eventName, rest);
+});
+
 export const SocketContext = createContext(socket);
 
 export function useSocket() {

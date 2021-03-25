@@ -16,7 +16,7 @@ export enum ClientEvent {
   CREATE_GAME = "create-game",
   GET_GAME = "get-game",
   GET_PLAYER = "get-player",
-  NAME_PLAYER = "name-player",
+  UPDATE_PLAYER = "update-player",
   JOIN_GAME = "join",
 }
 
@@ -34,9 +34,9 @@ export enum ServerEvent {
 export type ClientEventListeners = {
   [ClientEvent.CREATE_GAME]: (e: CreateGameEvent) => void;
   [ClientEvent.GET_GAME]: (gameId: string) => void;
-  [ClientEvent.GET_PLAYER]: (playerId: string) => void;
+  [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
   [ClientEvent.JOIN_GAME]: (e: JoinGameEvent) => void;
-  [ClientEvent.NAME_PLAYER]: (playerId: string, name: string) => void;
+  [ClientEvent.UPDATE_PLAYER]: (gameId: string, player: Player) => void;
 };
 
 export type ServerEventListeners = {
@@ -53,7 +53,7 @@ export type ServerEventListeners = {
 export interface GameCreatedEvent extends GameBase {}
 
 export interface CreateGameEvent {
-  playerName: string;
+  playerName?: string;
   socketId: string;
 }
 

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useParams } from "react-router";
 import { bundle, useRiducer } from "riduce";
 import { useSocket } from "../socket";
 import { ClientEvent, ServerEvent } from "../types/event.types";
@@ -22,7 +23,7 @@ export default function usePlayer(
 ): UsePlayerResult {
   const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
-
+  const { gameId } = useParams<{ gameId: string }>();
   const playerSocketId = playerId ?? socket.id;
 
   const setPlayer = (player: Player) =>
@@ -31,8 +32,10 @@ export default function usePlayer(
     );
 
   useEffect(() => {
-    playerSocketId && socket.emit(ClientEvent.GET_PLAYER, playerSocketId);
-  }, [socket, playerSocketId]);
+    gameId &&
+      playerSocketId &&
+      socket.emit(ClientEvent.GET_PLAYER, gameId, playerSocketId);
+  }, [socket, gameId, playerSocketId]);
 
   useSocketListener(ServerEvent.PLAYER_GOTTEN, (player) => {
     setPlayer(player);
