@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GameRoute from "./routes/GameRoute";
 import IndexRoute from "./routes/IndexRoute";
-import { socket, SocketContext } from "./socket";
+import { useSocket } from "./socket";
 
 function App() {
+  const socket = useSocket();
+
   return (
-    <SocketContext.Provider value={socket}>
-      <Router>
-        <Switch>
-          <Route exact path="/game/:gameId" component={GameRoute} />
-          <Route path="/" component={IndexRoute} />
-        </Switch>
-      </Router>
-    </SocketContext.Provider>
+    <Router>
+      <Switch>
+        <Route exact path="/game/:gameId" component={GameRoute} />
+        <Route path="/" component={IndexRoute} />
+      </Switch>
+    </Router>
   );
 }
 

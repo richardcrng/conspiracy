@@ -5,9 +5,9 @@ export enum GameStatus {
 }
 
 export interface Player {
-  name: string;
-  isHost?: boolean;
   socketId: string;
+  name?: string;
+  isHost?: boolean;
 }
 
 export type Game = GameBase | OngoingGame;

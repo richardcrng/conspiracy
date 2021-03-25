@@ -7,7 +7,8 @@ import {
 } from "../../client/src/types/event.types";
 import app from "./express";
 import { createGame } from "./utils";
-import { games } from "./db";
+import { games, players } from "./db";
+import { Player } from "../../client/src/types/game.types";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -18,6 +19,14 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket: ServerSocket) => {
+  const playerId = socket.id;
+  const player: Player = { socketId: playerId };
+  players[player.socketId] = player;
+
+  socket.on("disconnect", () => {
+    delete players[playerId];
+  });
+
   socket.on(ClientEvent.CREATE_GAME, (e) => {
     const createdGame = createGame(e);
     games[createdGame.id] = createdGame;
