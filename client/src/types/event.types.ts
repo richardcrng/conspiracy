@@ -16,8 +16,9 @@ export enum ClientEvent {
   CREATE_GAME = "create-game",
   GET_GAME = "get-game",
   GET_PLAYER = "get-player",
-  UPDATE_PLAYER = "update-player",
   JOIN_GAME = "join",
+  START_GAME = "start-game",
+  UPDATE_PLAYER = "update-player",
 }
 
 export enum ServerEvent {
@@ -37,6 +38,7 @@ export type ClientEventListeners = {
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
   [ClientEvent.JOIN_GAME]: (gameId: string, player: Player) => void;
+  [ClientEvent.START_GAME]: (gameId: string) => void;
   [ClientEvent.UPDATE_PLAYER]: (gameId: string, player: Player) => void;
 };
 

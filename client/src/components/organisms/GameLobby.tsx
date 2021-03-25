@@ -4,11 +4,12 @@ import PlayerList from "../atoms/PlayerList";
 
 interface Props {
   game: GameBase;
+  handleStartGame(): void;
   players: Player[];
   player: Player;
 }
 
-function GameLobby({ game, players, player }: Props) {
+function GameLobby({ game, handleStartGame, players, player }: Props) {
   const readiness = gameLobbyReadiness(game);
 
   return (
@@ -16,7 +17,9 @@ function GameLobby({ game, players, player }: Props) {
       <h1>Game id: {game.id}</h1>
       <PlayerList players={players} />
       {player.isHost ? (
-        <button>Start game</button>
+        <button disabled={!readiness.isReady} onClick={handleStartGame}>
+          Start game
+        </button>
       ) : (
         <p>Waiting for the host to start the game</p>
       )}

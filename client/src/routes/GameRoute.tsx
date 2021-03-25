@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import PlayerNamer from "../components/atoms/PlayerNamer";
-import GameLobby from "../components/organisms/GameLobby";
+import GamePage from "../components/pages/GamePage";
 import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
 import { useSocket } from "../socket";
@@ -45,8 +45,11 @@ function GameRoute() {
       <>
         {game.loading && <p>Loading...</p>}
         {game.data && player.data && (
-          <GameLobby
+          <GamePage
             game={game.data}
+            handleStartGame={() => {
+              socket.emit(ClientEvent.START_GAME, game.data!.id);
+            }}
             players={Object.values(game.data.players)}
             player={player.data}
           />
