@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router";
 import PlayerNamer from "../components/atoms/PlayerNamer";
 import GameLobby from "../components/organisms/GameLobby";
@@ -16,33 +15,40 @@ function GameRoute() {
 
   if (!player.loading && !player.data?.name) {
     return (
-      <PlayerNamer
-        handleSetName={(name) => {
-          if (player.data) {
-            // player is in game, so update
-            socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
-              socketId: socket.id,
-              name,
-              gameId,
-            });
-          } else {
-            // player not in game, so join
-            socket.emit(ClientEvent.JOIN_GAME, gameId, {
-              socketId: socket.id,
-              name,
-            });
-          }
-        }}
-      />
+      <>
+        <p>
+          To {player.data?.isHost ? "host" : "join"} the game, please choose a
+          player name first:
+        </p>
+        <PlayerNamer
+          handleSetName={(name) => {
+            if (player.data) {
+              // player is in game, so update
+              socket.emit(ClientEvent.UPDATE_PLAYER, gameId, {
+                socketId: socket.id,
+                name,
+                gameId,
+              });
+            } else {
+              // player not in game, so join
+              socket.emit(ClientEvent.JOIN_GAME, gameId, {
+                socketId: socket.id,
+                name,
+              });
+            }
+          }}
+        />
+      </>
     );
   } else
     return (
       <>
         {game.loading && <p>Loading...</p>}
-        {game.data && (
+        {game.data && player.data && (
           <GameLobby
-            gameId={game.data.id}
+            game={game.data}
             players={Object.values(game.data.players)}
+            player={player.data}
           />
         )}
       </>

@@ -1,16 +1,28 @@
-import { Player } from "../../types/game.types";
+import { gameLobbyReadiness } from "../../models/game";
+import { GameBase, Player } from "../../types/game.types";
 import PlayerList from "../atoms/PlayerList";
 
 interface Props {
-  gameId: string;
+  game: GameBase;
   players: Player[];
+  player: Player;
 }
 
-function GameLobby({ gameId, players }: Props) {
+function GameLobby({ game, players, player }: Props) {
+  const readiness = gameLobbyReadiness(game);
+
   return (
     <>
-      <h1>Game id: {gameId}</h1>
+      <h1>Game id: {game.id}</h1>
       <PlayerList players={players} />
+      {player.isHost ? (
+        <button>Start game</button>
+      ) : (
+        <p>Waiting for the host to start the game</p>
+      )}
+      {!readiness.isReady && (
+        <p>The game cannot yet be started: {readiness.reason}</p>
+      )}
     </>
   );
 }
