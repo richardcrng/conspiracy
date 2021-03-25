@@ -1,10 +1,10 @@
-import { useParams } from "react-router"
+import { useParams } from "react-router";
 import useGame from "../hooks/useGame";
 
 function GameRoute() {
-  const { gameId } = useParams<{ gameId: string }>()
-  
-  const { game, loading, error } = useGame(gameId)
+  const { gameId } = useParams<{ gameId: string }>();
+
+  const { game, loading, error } = useGame(gameId);
 
   return (
     <>
@@ -16,4 +16,4 @@ function GameRoute() {
   );
 }
 
-export default GameRoute
+export default GameRoute;

@@ -32,7 +32,12 @@ export default function useGame(gameId: GameBase["id"]): UseGameResult {
   });
 
   useSocketListener(ServerEvent.GAME_NOT_FOUND, () => {
-    dispatch(bundle([actions.error.create.update("Game not found"), actions.loading.create.off()]));
+    dispatch(
+      bundle([
+        actions.error.create.update("Game not found"),
+        actions.loading.create.off(),
+      ])
+    );
   });
 
   return state;

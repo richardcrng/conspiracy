@@ -8,8 +8,8 @@ function App() {
     <SocketContext.Provider value={socket}>
       <Router>
         <Switch>
-          <Route exact path='/game/:gameId' component={GameRoute} />
-          <Route path='/' component={IndexRoute} />
+          <Route exact path="/game/:gameId" component={GameRoute} />
+          <Route path="/" component={IndexRoute} />
         </Switch>
       </Router>
     </SocketContext.Provider>

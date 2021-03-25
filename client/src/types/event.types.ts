@@ -1,30 +1,36 @@
-import { Socket as TClientSocket } from 'socket.io-client'
-import { Socket as TServerSocket } from 'socket.io';
+import { Socket as TClientSocket } from "socket.io-client";
+import { Socket as TServerSocket } from "socket.io";
 import { GameBase } from "./game.types";
 
-export type ClientSocket = TClientSocket<ServerEventListeners, ClientEventListeners>
+export type ClientSocket = TClientSocket<
+  ServerEventListeners,
+  ClientEventListeners
+>;
 
-export type ServerSocket = TServerSocket<ClientEventListeners, ServerEventListeners>
+export type ServerSocket = TServerSocket<
+  ClientEventListeners,
+  ServerEventListeners
+>;
 
 export enum ClientEvent {
   CREATE_GAME = "create-game",
-  GET_GAME = 'get-game',
+  GET_GAME = "get-game",
   JOIN_GAME = "join",
 }
 
 export enum ServerEvent {
-  GAME_CREATED = 'game-created',
-  GAME_GOTTEN = 'game-gotten',
-  GAME_JOINED = 'game-joined',
-  GAME_NOT_FOUND = 'game-not-found',
-  REDIRECT_TO_LOBBY = 'redirect-to-lobby'
+  GAME_CREATED = "game-created",
+  GAME_GOTTEN = "game-gotten",
+  GAME_JOINED = "game-joined",
+  GAME_NOT_FOUND = "game-not-found",
+  REDIRECT_TO_LOBBY = "redirect-to-lobby",
 }
 
 export type ClientEventListeners = {
   [ClientEvent.CREATE_GAME]: (e: CreateGameEvent) => void;
   [ClientEvent.GET_GAME]: (gameId: string) => void;
   [ClientEvent.JOIN_GAME]: (e: JoinGameEvent) => void;
-}
+};
 
 export type ServerEventListeners = {
   [ServerEvent.GAME_CREATED]: (e: GameCreatedEvent) => void;
@@ -44,9 +50,9 @@ export interface CreateGameEvent {
 export interface JoinGameEvent {
   playerName: string;
   socketId: string;
-  gameId: GameBase['id'];
+  gameId: GameBase["id"];
 }
 
 export interface GameJoinedEvent {
-  game: GameBase
+  game: GameBase;
 }

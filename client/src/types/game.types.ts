@@ -1,7 +1,7 @@
 export enum GameStatus {
-  LOBBY = 'lobby',
-  STARTED = 'started',
-  COMPLETE = 'complete'
+  LOBBY = "lobby",
+  STARTED = "started",
+  COMPLETE = "complete",
 }
 
 export interface Player {
@@ -10,7 +10,7 @@ export interface Player {
   socketId: string;
 }
 
-export type Game = GameBase | OngoingGame
+export type Game = GameBase | OngoingGame;
 
 export interface GameBase {
   id: string;
@@ -24,6 +24,6 @@ export interface GameBase {
 
 export interface OngoingGame extends GameBase {
   status: GameStatus.STARTED;
-  conspiracyTarget: Player['name'] | null;
-  votes: { [K in keyof GameBase['players']]: Player['name'] };
+  conspiracyTarget: Player["name"] | null;
+  votes: { [K in keyof GameBase["players"]]: Player["name"] };
 }
