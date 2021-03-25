@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCopyToClipboard } from "react-use";
 import { gameLobbyReadiness } from "../../models/game";
 import { GameBase, Player } from "../../types/game.types";
 import PlayerList from "../atoms/PlayerList";
@@ -13,6 +14,7 @@ interface Props {
 function GameLobby({ game, handleStartGame, players, player }: Props) {
   const readiness = gameLobbyReadiness(game);
   const [customProbability, setCustomProbability] = useState("");
+  const [_, copyToClipboard] = useCopyToClipboard();
 
   const imputedProbability = isNaN(Number(customProbability))
     ? undefined
@@ -26,6 +28,16 @@ function GameLobby({ game, handleStartGame, players, player }: Props) {
   return (
     <>
       <h1>Game id: {game.id}</h1>
+      <a
+        onClick={(e) => {
+          e.preventDefault();
+          copyToClipboard(window.location.href);
+          window.alert(`Copied to clipboard: ${window.location.href}`);
+        }}
+        href="#"
+      >
+        Copy game join link
+      </a>
       {player.isHost && (
         <>
           <p>
@@ -37,6 +49,7 @@ function GameLobby({ game, handleStartGame, players, player }: Props) {
           <input
             value={customProbability}
             onChange={(e) => setCustomProbability(e.target.value)}
+            placeholder="(optional) custom probability"
           />
           {illegalProbability && <p>That's an illegal probability...</p>}
         </>
