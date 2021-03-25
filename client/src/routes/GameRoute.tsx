@@ -5,6 +5,7 @@ import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
 import { useSocket } from "../socket";
 import { ClientEvent } from "../types/event.types";
+import { GameStatus } from "../types/game.types";
 
 function GameRoute() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -13,7 +14,9 @@ function GameRoute() {
   const game = useGame(gameId);
   const player = usePlayer(socket.id);
 
-  if (!player.loading && !player.data?.name) {
+  if (game.data?.status === GameStatus.STARTED && !player.data) {
+    return <p>Can't join a game that is underway - sorry</p>;
+  } else if (!player.loading && !player.data?.name) {
     return (
       <>
         <p>
