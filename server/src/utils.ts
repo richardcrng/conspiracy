@@ -8,6 +8,7 @@ export const createGame = (data: CreateGameEvent): GameBase => {
       [data.socketId]: {
         name: data.playerName,
         socketId: data.socketId,
+        isHost: true,
       },
     },
     status: GameStatus.LOBBY,

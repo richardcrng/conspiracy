@@ -11,8 +11,6 @@ function IndexRoute() {
   const socket = useSocket();
   const history = useHistory();
 
-  console.log(socket.id);
-
   useSocketListener(ServerEvent.GAME_CREATED, (data) => {
     history.push(`/game/${data.id}`);
   });
@@ -27,7 +25,6 @@ function IndexRoute() {
   return (
     <>
       <h1>Conspiracy</h1>
-      <input />
       <button onClick={handleNewGame}>New game</button>
       <button>Join game</button>
     </>
