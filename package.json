@@ -11,6 +11,7 @@
     "start:client:dev": "yarn workspace @conspiracy/client start",
     "start:server": "yarn workspace @conspiracy/server start",
     "start:server:compiled": "yarn workspace @conspiracy/server start:compiled",
-    "start:server:dev": "yarn workspace @conspiracy/server start:dev"
+    "start:server:dev": "yarn workspace @conspiracy/server start:dev",
+    "heroku-postbuild": "yarn build:server"
   }
 }

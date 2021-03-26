@@ -2,11 +2,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { ClientSocket } from "./types/event.types";
 
-export const socket: ClientSocket = io("localhost:4000");
+const socketUrl = true
+  ? "https://radiant-sierra-53845.herokuapp.com/"
+  : "localhost:4000";
 
-// socket.onAny((eventName, ...rest) => {
-//   console.log("event", eventName, rest);
-// });
+export const socket: ClientSocket = io(socketUrl);
 
 export const SocketContext = createContext(socket);
 
