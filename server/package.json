@@ -21,7 +21,9 @@
     "socket.io": "^4.0.0"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "yarn start:compiled",
+    "start:compiled": "node build/server/src/index.js",
     "start:dev": "ts-node-dev src/index.ts"
   }
 }
