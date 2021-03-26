@@ -1,4 +1,4 @@
-import { Game, GameBase, Vote } from "../types/game.types";
+import { Game, GameBase, GameStatus, Vote } from "../types/game.types";
 
 export const gameLobbyReadiness = (
   game: GameBase
@@ -12,6 +12,10 @@ export const gameLobbyReadiness = (
   } else {
     return { isReady: true };
   }
+};
+
+export const conspiracyVictimId = (game: Game): string | null => {
+  return game.conspiracyTarget ? game.conspiracyTarget : null;
 };
 
 export const conspiracyVictimName = (game: Game): string | undefined => {
@@ -28,6 +32,17 @@ export const isConspiracyMember = (game: Game, playerId: string) => {
 
 export const isConspiracyVictim = (game: Game, playerId: string): boolean => {
   return hasConspiracy(game) && game.conspiracyTarget === playerId;
+};
+
+export const isWinner = (game: Game, playerId: string): boolean => {
+  if (isConspiracyMember(game, playerId)) {
+    return getVote(game, conspiracyVictimId(game)!) === Vote.NO_CONSPIRACY;
+  } else {
+    const playerVote = getVote(game, playerId);
+    return hasConspiracy(game)
+      ? playerVote === Vote.CONSPIRACY
+      : playerVote === Vote.NO_CONSPIRACY;
+  }
 };
 
 export const getVote = (game: Game, playerId: string): Vote | undefined => {
