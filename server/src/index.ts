@@ -1,3 +1,7 @@
 import httpServer from "./server";
 
-httpServer.listen(process.env.PORT ?? 4000);
+const PORT = process.env.PORT ?? 4000;
+
+httpServer.listen(PORT, undefined, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
