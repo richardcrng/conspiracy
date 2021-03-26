@@ -30,12 +30,20 @@ function GameOngoing({ game, player, handleVote }: Props) {
           <>
             {player.name}{" "}
             {hasVoted(game, player.socketId)
-              ? "(has voted)"
-              : "(has not voted)"}
+              ? "🗳️ (vote cast)"
+              : "🤔 (thinking)"}
           </>
         )}
       />
-      <p>{playerVote ? `Your vote: ${playerVote}` : "You have not voted"}</p>
+      <p>
+        {playerVote ? (
+          <span>
+            🗳️ Your vote: <i>{playerVote}</i>
+          </span>
+        ) : (
+          "🤔 You have not voted"
+        )}
+      </p>
       <Button color="red" onClick={() => handleVote(Vote.CONSPIRACY)}>
         Vote: Conspiracy
       </Button>
