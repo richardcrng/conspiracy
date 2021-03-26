@@ -8,7 +8,7 @@ import { addPlayerListeners } from "./player/listeners";
 const httpServer = createServer(app);
 const io: ServerIO = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
