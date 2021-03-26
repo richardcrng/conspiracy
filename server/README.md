@@ -1,7 +1,7 @@
-# Awesome Project Build with TypeORM
+# Conspiracy - backend
 
-Steps to run this project:
+This is the backend code for Conspiracy:
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+- TypeScript
+- socket.io
+- no persistence (games are transient!)
