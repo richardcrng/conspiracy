@@ -26,7 +26,15 @@ function IndexRoute() {
     <>
       <h1>Conspiracy</h1>
       <button onClick={handleNewGame}>New game</button>
-      <button>Join game</button>
+      <button
+        onClick={() => {
+          window.alert(
+            "Not implemented yet - get the game join link from your host"
+          );
+        }}
+      >
+        Join game
+      </button>
     </>
   );
 }
