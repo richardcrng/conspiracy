@@ -1,4 +1,4 @@
-import { Button } from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 import {
   conspiracyVictimName,
   getVote,
@@ -26,12 +26,26 @@ function GameOngoing({ game, player, handleVote }: Props) {
       </p>
       <PlayerList
         players={Object.values(game.players)}
+        listParent={({ children }) => (
+          <Table basic="very" celled collapsing>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Player name</Table.HeaderCell>
+                <Table.HeaderCell>Status</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>{children}</Table.Body>
+          </Table>
+        )}
+        listItemParent={({ children }) => <Table.Row>{children}</Table.Row>}
         renderPlayer={(player) => (
           <>
-            {player.name}{" "}
-            {hasVoted(game, player.socketId)
-              ? "🗳️ (vote cast)"
-              : "🤔 (thinking)"}
+            <Table.Cell>{player.name}</Table.Cell>
+            <Table.Cell>
+              {hasVoted(game, player.socketId)
+                ? "🗳️ (vote cast)"
+                : "🤔 (thinking)"}
+            </Table.Cell>
           </>
         )}
       />
