@@ -45,7 +45,7 @@ function GameResults({ game, players }: Props) {
             {isConspiracyMember(game, player.socketId)
               ? "conspirator"
               : "innocent"}
-            ) voted {getVote(game, player.socketId)}:{" "}
+            ) voted <i>{getVote(game, player.socketId)}</i>:{" "}
             <b>{isWinner(game, player.socketId) ? "wins" : "loses"}</b>
           </>
         )}
