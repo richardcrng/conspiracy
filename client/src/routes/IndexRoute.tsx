@@ -25,7 +25,11 @@ function IndexRoute() {
 
   return (
     <>
-      <h1>Conspiracy</h1>
+      <h1>🤫 Conspiracy</h1>
+      <p>
+        A social game of deception, deduction and paranoia for three or more
+        players.
+      </p>
       <Button primary onClick={handleNewGame}>
         New game
       </Button>
