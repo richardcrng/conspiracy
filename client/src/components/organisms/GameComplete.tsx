@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "semantic-ui-react";
 import useSocketListener from "../../hooks/useSocketListener";
 import { useSocket } from "../../socket";
 import { ClientEvent, ServerEvent } from "../../types/event.types";
@@ -36,7 +37,9 @@ function GameComplete({ game, player, players }: Props) {
               : "Waiting for host to show results..."}
           </p>
           {player.isHost && (
-            <button onClick={handleShowResults}>Broadcast results</button>
+            <Button primary onClick={handleShowResults}>
+              Broadcast results
+            </Button>
           )}
         </>
       )}

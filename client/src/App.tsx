@@ -5,10 +5,12 @@ import IndexRoute from "./routes/IndexRoute";
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/game/:gameId" component={GameRoute} />
-        <Route path="/" component={IndexRoute} />
-      </Switch>
+      <main style={{ margin: "5px" }}>
+        <Switch>
+          <Route exact path="/game/:gameId" component={GameRoute} />
+          <Route path="/" component={IndexRoute} />
+        </Switch>
+      </main>
     </Router>
   );
 }

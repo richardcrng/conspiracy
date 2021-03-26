@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCopyToClipboard } from "react-use";
+import { Button, Input } from "semantic-ui-react";
 import { gameLobbyReadiness } from "../../models/game";
 import { GameBase, Player } from "../../types/game.types";
 import PlayerList from "../atoms/PlayerList";
@@ -49,10 +50,12 @@ function GameLobby({ game, handleStartGame, players, player }: Props) {
             probability (where the probability of a conspiracy increases with
             the number of players)
           </p>
-          <input
+          <Input
+            label={{ basic: "true", content: "%" }}
+            labelPosition="right"
             value={customProbability}
             onChange={(e) => setCustomProbability(e.target.value)}
-            placeholder="(optional) custom probability"
+            placeholder="custom probability"
           />
           {illegalProbability && <p>That's an illegal probability...</p>}
         </>
@@ -60,14 +63,15 @@ function GameLobby({ game, handleStartGame, players, player }: Props) {
       <PlayerList players={players} />
       {player.isHost ? (
         <>
-          <button
+          <Button
+            primary
             disabled={disableStart}
             onClick={() => {
               handleStartGame(imputedProbability);
             }}
           >
             Start game
-          </button>
+          </Button>
         </>
       ) : (
         <p>Waiting for the host to start the game</p>
