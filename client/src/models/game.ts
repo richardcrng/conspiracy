@@ -1,4 +1,4 @@
-import { Game, GameBase, GameStatus, Vote } from "../types/game.types";
+import { Game, GameBase, Vote } from "../types/game.types";
 
 export const gameLobbyReadiness = (
   game: GameBase

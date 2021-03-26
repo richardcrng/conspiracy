@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 import { gameLobbyReadiness } from "../../models/game";
@@ -14,6 +16,7 @@ interface Props {
 function GameLobby({ game, handleStartGame, players, player }: Props) {
   const readiness = gameLobbyReadiness(game);
   const [customProbability, setCustomProbability] = useState("");
+  // eslint-disable-next-line
   const [_, copyToClipboard] = useCopyToClipboard();
 
   const imputedProbability = isNaN(Number(customProbability))
