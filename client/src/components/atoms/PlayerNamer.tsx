@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Input } from "semantic-ui-react";
 
 interface Props {
   handleSetName(name: string): void;
@@ -17,14 +18,16 @@ function PlayerNamer({ handleSetName }: Props) {
 
   return (
     <>
-      <input
+      <Input
         placeholder="Enter your name"
         value={inputText}
         onChange={(e) => {
           setInputText(e.target.value);
         }}
       />
-      <button onClick={handleSetClick}>Set player name</button>
+      <Button primary onClick={handleSetClick}>
+        Set player name
+      </Button>
     </>
   );
 }

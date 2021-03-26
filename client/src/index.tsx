@@ -4,6 +4,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { socket, SocketContext } from "./socket";
 
+import "semantic-ui-css/semantic.min.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <SocketContext.Provider value={socket}>

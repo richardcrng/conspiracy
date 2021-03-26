@@ -1,3 +1,4 @@
+import { Button } from "semantic-ui-react";
 import {
   conspiracyVictimName,
   getVote,
@@ -35,13 +36,13 @@ function GameOngoing({ game, player, handleVote }: Props) {
         )}
       />
       <p>{playerVote ? `Your vote: ${playerVote}` : "You have not voted"}</p>
-      <button onClick={() => handleVote(Vote.CONSPIRACY)}>
+      <Button color="red" onClick={() => handleVote(Vote.CONSPIRACY)}>
         Vote: Conspiracy
-      </button>
-      <button onClick={() => handleVote(Vote.NO_CONSPIRACY)}>
+      </Button>
+      <Button color="green" onClick={() => handleVote(Vote.NO_CONSPIRACY)}>
         Vote: No Conspiracy
-      </button>
-      <button onClick={() => handleVote(null)}>Clear vote</button>
+      </Button>
+      <Button onClick={() => handleVote(null)}>Clear vote</Button>
     </>
   );
 }

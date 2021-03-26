@@ -1,4 +1,5 @@
 import { useHistory } from "react-router";
+import { Button } from "semantic-ui-react";
 import useSocketListener from "../hooks/useSocketListener";
 import { useSocket } from "../socket";
 import {
@@ -25,8 +26,10 @@ function IndexRoute() {
   return (
     <>
       <h1>Conspiracy</h1>
-      <button onClick={handleNewGame}>New game</button>
-      <button
+      <Button primary onClick={handleNewGame}>
+        New game
+      </Button>
+      <Button
         onClick={() => {
           window.alert(
             "Not implemented yet - get the game join link from your host"
@@ -34,7 +37,7 @@ function IndexRoute() {
         }}
       >
         Join game
-      </button>
+      </Button>
     </>
   );
 }
