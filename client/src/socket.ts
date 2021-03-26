@@ -2,9 +2,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { ClientSocket } from "./types/event.types";
 
-const socketUrl = true
-  ? "https://radiant-sierra-53845.herokuapp.com/"
-  : "localhost:4000";
+const socketUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://radiant-sierra-53845.herokuapp.com/"
+    : "localhost:4000";
 
 export const socket: ClientSocket = io(socketUrl);
 
