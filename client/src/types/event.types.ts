@@ -21,6 +21,7 @@ export enum ClientEvent {
   JOIN_GAME = "join",
   MAKE_VOTE = "make-vote",
   START_GAME = "start-game",
+  SHOW_RESULTS = "show-results",
   UPDATE_PLAYER = "update-player",
 }
 
@@ -34,6 +35,7 @@ export enum ServerEvent {
   PLAYER_NOT_FOUND = "player-not-found",
   PLAYER_UPDATED = "player-updated",
   REDIRECT_TO_LOBBY = "redirect-to-lobby",
+  RESULTS_SHOWN = "results-shown",
 }
 
 export type ClientEventListeners = {
@@ -46,6 +48,7 @@ export type ClientEventListeners = {
     playerId: string,
     vote: Vote | null
   ) => void;
+  [ClientEvent.SHOW_RESULTS]: (gameId: string) => void;
   [ClientEvent.START_GAME]: (
     gameId: string,
     conspiracyProbability?: number
@@ -63,6 +66,7 @@ export type ServerEventListeners = {
   [ServerEvent.PLAYER_UPDATED]: (playerId: string, player: Player) => void;
   [ServerEvent.PLAYER_NOT_FOUND]: () => void;
   [ServerEvent.REDIRECT_TO_LOBBY]: () => void;
+  [ServerEvent.RESULTS_SHOWN]: (gameId: string) => void;
 };
 
 export interface GameCreatedEvent extends GameBase {}

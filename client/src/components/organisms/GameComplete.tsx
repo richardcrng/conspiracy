@@ -1,12 +1,9 @@
-import {
-  conspiracyVictimName,
-  getVote,
-  hasConspiracy,
-  isConspiracyMember,
-  isWinner,
-} from "../../models/game";
+import { useState } from "react";
+import useSocketListener from "../../hooks/useSocketListener";
+import { useSocket } from "../../socket";
+import { ClientEvent, ServerEvent } from "../../types/event.types";
 import { Game, Player } from "../../types/game.types";
-import PlayerList from "../atoms/PlayerList";
+import GameResults from "../molecules/GameResults";
 
 interface Props {
   game: Game;
@@ -15,43 +12,34 @@ interface Props {
 }
 
 function GameComplete({ game, player, players }: Props) {
-  const isConspiracy = hasConspiracy(game);
+  const socket = useSocket();
+  const [showResults, setShowResults] = useState(false);
+
+  useSocketListener(ServerEvent.RESULTS_SHOWN, (gameId) => {
+    gameId === game.id && setShowResults(true);
+  });
+
+  const handleShowResults = () => {
+    socket.emit(ClientEvent.SHOW_RESULTS, game.id);
+  };
 
   return (
     <>
       <p>Game complete!</p>
-      <p>
-        There was{" "}
-        {isConspiracy
-          ? `a conspiracy against ${conspiracyVictimName(game)}`
-          : "no conspiracy"}
-        !
-      </p>
-      {isConspiracy ? (
-        <p>
-          Since there was a conspiracy, the only vote that matters is that of
-          the single innocent: did they correctly suss out whether or not there
-          was a conspiracy?
-        </p>
+      {showResults ? (
+        <GameResults {...{ game, players }} />
       ) : (
-        <p>
-          Since there was no conspiracy, all votes matter: which players
-          correctly sussed out that there was no conspiracy?
-        </p>
+        <>
+          <p>
+            {player.isHost
+              ? "Click to show results to all players"
+              : "Waiting for host to show results..."}
+          </p>
+          {player.isHost && (
+            <button onClick={handleShowResults}>Broadcast results</button>
+          )}
+        </>
       )}
-      <PlayerList
-        players={players}
-        renderPlayer={(player) => (
-          <>
-            <b>{player.name}</b> (
-            {isConspiracyMember(game, player.socketId)
-              ? "conspirator"
-              : "innocent"}
-            ) voted {getVote(game, player.socketId)}:{" "}
-            <b>{isWinner(game, player.socketId) ? "wins" : "loses"}</b>
-          </>
-        )}
-      />
     </>
   );
 }
