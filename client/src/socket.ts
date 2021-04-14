@@ -4,7 +4,7 @@ import { ClientSocket } from "./types/event.types";
 
 const socketUrl =
   process.env.NODE_ENV === "production"
-    ? "https://radiant-sierra-53845.herokuapp.com/"
+    ? "https://conspiracy-game.herokuapp.com/"
     : "localhost:4000";
 
 export const socket: ClientSocket = io(socketUrl);

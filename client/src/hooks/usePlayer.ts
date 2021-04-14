@@ -19,7 +19,8 @@ const initialState: UsePlayerResult = {
 };
 
 export default function usePlayer(
-  playerId?: Player["socketId"]
+  playerId?: Player["socketId"],
+  aliasIds: string[] = []
 ): UsePlayerResult {
   const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
@@ -38,15 +39,16 @@ export default function usePlayer(
   useEffect(() => {
     gameId &&
       playerSocketId &&
-      socket.emit(ClientEvent.GET_PLAYER, gameId, playerSocketId);
-  }, [socket, gameId, playerSocketId]);
+      socket.emit(ClientEvent.GET_PLAYER, gameId, playerSocketId, aliasIds);
+  }, [socket, gameId, playerSocketId, aliasIds]);
 
   useSocketListener(ServerEvent.PLAYER_GOTTEN, (id, player) => {
-    id === playerSocketId && setPlayer(player);
+    console.log("received player", player);
+    setPlayer(player);
   });
 
   useSocketListener(ServerEvent.PLAYER_UPDATED, (id, player) => {
-    id === playerSocketId && setPlayer(player);
+    setPlayer(player);
   });
 
   useSocketListener(ServerEvent.PLAYER_NOT_FOUND, () => {

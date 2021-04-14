@@ -1,6 +1,4 @@
-import { ServerEvent, ServerSocket } from "../../client/src/types/event.types";
 import { GameBase, Player } from "../../client/src/types/game.types";
-// import { Socket } from "socket.io";
 
 export const games: Record<GameBase["id"], GameBase> = {};
 // export const players: Record<Socket["id"], Player> = {};
@@ -13,8 +11,18 @@ export const getGameById = (gameId: GameBase["id"]): GameBase | undefined => {
 
 export const getPlayer = (
   gameId: string,
-  playerId: string
+  playerId: string,
+  aliasIds: string[]
 ): Player | undefined => {
   const game = getGameById(gameId);
-  return game?.players[playerId];
+  if (!game) return;
+
+  const { players } = game;
+  const immediateMatch = players[playerId];
+  if (immediateMatch) return immediateMatch;
+
+  const matchingAlias = Object.values(players).find((player) =>
+    aliasIds.includes(player.socketId)
+  );
+  return matchingAlias;
 };

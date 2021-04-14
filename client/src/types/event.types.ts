@@ -15,6 +15,7 @@ export type ServerSocket = TServerSocket<
 export type ServerIO = TServer<ClientEventListeners, ServerEventListeners>;
 
 export enum ClientEvent {
+  ALIAS_SOCKET = "alias-socket",
   CREATE_GAME = "create-game",
   GET_GAME = "get-game",
   GET_PLAYER = "get-player",
@@ -38,10 +39,17 @@ export enum ServerEvent {
   RESULTS_SHOWN = "results-shown",
 }
 
+/**
+ * Listeners for `ClientEvent`s
+ */
 export type ClientEventListeners = {
   [ClientEvent.CREATE_GAME]: (e: CreateGameEvent) => void;
   [ClientEvent.GET_GAME]: (gameId: string) => void;
-  [ClientEvent.GET_PLAYER]: (gameId: string, playerId: string) => void;
+  [ClientEvent.GET_PLAYER]: (
+    gameId: string,
+    playerId: string,
+    aliasIds: string[]
+  ) => void;
   [ClientEvent.JOIN_GAME]: (gameId: string, player: Player) => void;
   [ClientEvent.MAKE_VOTE]: (
     gameId: string,
@@ -56,6 +64,9 @@ export type ClientEventListeners = {
   [ClientEvent.UPDATE_PLAYER]: (gameId: string, player: Player) => void;
 };
 
+/**
+ * Listeners for `ServerEvent`s
+ */
 export type ServerEventListeners = {
   [ServerEvent.GAME_CREATED]: (e: GameCreatedEvent) => void;
   [ServerEvent.GAME_GOTTEN]: (gameId: string, game: GameBase) => void;
