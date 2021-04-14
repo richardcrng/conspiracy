@@ -3,6 +3,7 @@ import PlayerNamer from "../components/atoms/PlayerNamer";
 import GamePage from "../components/pages/GamePage";
 import useGame from "../hooks/useGame";
 import usePlayer from "../hooks/usePlayer";
+import useSocketAliases from "../hooks/useSocketAliases";
 import { useSocket } from "../socket";
 import { ClientEvent } from "../types/event.types";
 import { GameStatus } from "../types/game.types";
@@ -10,9 +11,10 @@ import { GameStatus } from "../types/game.types";
 function GameRoute() {
   const { gameId } = useParams<{ gameId: string }>();
   const socket = useSocket();
+  const socketAliases = useSocketAliases();
 
   const game = useGame(gameId);
-  const player = usePlayer(socket.id);
+  const player = usePlayer(socket.id, socketAliases);
 
   if (game.data?.status === GameStatus.STARTED && !player.data) {
     return <p>Can't join a game that is underway - sorry</p>;
@@ -61,7 +63,7 @@ function GameRoute() {
               socket.emit(
                 ClientEvent.MAKE_VOTE,
                 game.data!.id,
-                socket.id,
+                player.data?.socketId || "",
                 vote
               );
             }}

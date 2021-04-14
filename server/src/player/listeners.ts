@@ -13,8 +13,8 @@ export const addPlayerListeners = (
   socket: ServerSocket,
   io: ServerIO
 ): void => {
-  socket.on(ClientEvent.GET_PLAYER, (gameId, playerId) => {
-    const player = getPlayer(gameId, playerId);
+  socket.on(ClientEvent.GET_PLAYER, (gameId, playerId, aliasIds) => {
+    const player = getPlayer(gameId, playerId, aliasIds);
     player
       ? socket.emit(ServerEvent.PLAYER_GOTTEN, player.socketId, player)
       : socket.emit(ServerEvent.PLAYER_NOT_FOUND);
