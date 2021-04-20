@@ -44,11 +44,11 @@ export default function usePlayer(
 
   useSocketListener(ServerEvent.PLAYER_GOTTEN, (id, player) => {
     console.log("received player", player);
-    setPlayer(player);
+    [...aliasIds, playerId].includes(id) && setPlayer(player);
   });
 
   useSocketListener(ServerEvent.PLAYER_UPDATED, (id, player) => {
-    setPlayer(player);
+    [...aliasIds, playerId].includes(id) && setPlayer(player);
   });
 
   useSocketListener(ServerEvent.PLAYER_NOT_FOUND, () => {
