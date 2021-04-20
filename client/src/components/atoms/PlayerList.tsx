@@ -24,7 +24,7 @@ function PlayerList({
 }
 
 function DefaultListParent({ children }: PropsWithChildren<{}>) {
-  return <ul>{children}</ul>;
+  return <ol>{children}</ol>;
 }
 
 function DefaultListItem({ children }: PropsWithChildren<{}>) {
