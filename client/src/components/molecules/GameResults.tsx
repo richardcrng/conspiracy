@@ -41,7 +41,7 @@ function IndividualGameResultsGif({ game, player }: Omit<Props, "players">) {
     <>
       <h1>{isWinner(game, player.socketId) ? "YOU WIN" : "YOU LOSE"}</h1>
       <h2>{result.message}</h2>
-      <img src={result.gifUrl} />
+      <img alt={result.message} src={result.gifUrl} />
     </>
   );
 }
