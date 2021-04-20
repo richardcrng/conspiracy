@@ -1,5 +1,4 @@
 import {
-  conspiracyVictimName,
   getVote,
   hasConspiracy,
   isConspiracyMember,
