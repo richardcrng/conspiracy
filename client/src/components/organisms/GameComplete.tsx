@@ -28,7 +28,7 @@ function GameComplete({ game, player, players }: Props) {
     <>
       <p>Game complete!</p>
       {showResults ? (
-        <GameResults {...{ game, players }} />
+        <GameResults {...{ game, player, players }} />
       ) : (
         <>
           <p>

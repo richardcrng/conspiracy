@@ -10,33 +10,14 @@ import PlayerList from "../atoms/PlayerList";
 
 interface Props {
   game: Game;
+  player: Player;
   players: Player[];
 }
 
-function GameResults({ game, players }: Props) {
-  const isConspiracy = hasConspiracy(game);
-
+function GameResults({ game, player, players }: Props) {
   return (
     <>
-      <p>
-        There was{" "}
-        {isConspiracy
-          ? `a conspiracy against ${conspiracyVictimName(game)}`
-          : "no conspiracy"}
-        !
-      </p>
-      {isConspiracy ? (
-        <p>
-          Since there was a conspiracy, the only vote that matters is that of
-          the single innocent: did they correctly suss out whether or not there
-          was a conspiracy?
-        </p>
-      ) : (
-        <p>
-          Since there was no conspiracy, all votes matter: which players
-          correctly sussed out that there was no conspiracy?
-        </p>
-      )}
+      <IndividualGameResultsGif {...{ game, player }} />
       <PlayerList
         players={players}
         renderPlayer={(player) => (
@@ -52,6 +33,63 @@ function GameResults({ game, players }: Props) {
       />
     </>
   );
+}
+
+function IndividualGameResultsGif({ game, player }: Omit<Props, "players">) {
+  const result = getIndividualResult({ game, player })
+
+  return (
+    <>
+      <h1>{isWinner(game, player.socketId) ? "YOU WIN" : "YOU LOSE"}</h1>
+      <h2>{result.message}</h2>
+      <img src={result.gifUrl} />
+    </>
+  );
+}
+
+interface IndividualGameSummary {
+  gifUrl: string;
+  message: string;
+}
+
+const getIndividualResult = ({ game, player }: Omit<Props, 'players'>): IndividualGameSummary => {
+  const didWin = isWinner(game, player.socketId);
+  const isConspiracy = hasConspiracy(game);
+  const isConspiracist = isConspiracyMember(game, player.socketId)
+
+  if (didWin) {
+    // littlefinger smug
+    if (isConspiracist) return {
+      gifUrl: "https://media.giphy.com/media/Vff5Qxz6LLzag/giphy.gif",
+      message: "You pulled off the conspiracy!"
+    };
+    // sherlock victory
+    if (isConspiracy) return {
+      gifUrl: "https://media.giphy.com/media/l6d8IEQdmiSsM/giphy.gif",
+      message: 'You figured out the conspiracy!'
+    };
+    // minions - no conspiracy and win
+    return {
+      gifUrl: 'https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif',
+      message: "You kept your sanity!"
+    }
+  } else {
+    // foiled
+    if (isConspiracist) return {
+      gifUrl: "https://media.giphy.com/media/xUNd9I18JKZnp91Kne/giphy.gif",
+      message: "Your conspiracy was foiled!"
+    };
+    // shocked Jim Carey
+    if (isConspiracy) return {
+      gifUrl: "https://media.giphy.com/media/jquDWJfPUMCiI/giphy.gif",
+      message: 'The conspiracy tricked you!'
+    };
+    // flat earther
+    return {
+      gifUrl: "https://media.giphy.com/media/eg4d3BZTuxeuDyM9UZ/giphy.gif",
+      message: "You were too paranoid!"
+    };
+  }
 }
 
 export default GameResults;
