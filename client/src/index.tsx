@@ -1,15 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { socket, SocketContext } from "./socket";
 
 import "semantic-ui-css/semantic.min.css";
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <SocketContext.Provider value={socket}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </SocketContext.Provider>
   </React.StrictMode>,
   document.getElementById("root")

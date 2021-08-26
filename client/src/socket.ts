@@ -2,10 +2,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { ClientSocket } from "./types/event.types";
 
-const socketUrl =
+export const socketUrl =
   process.env.NODE_ENV === "production"
-    ? "https://conspiracy-game.herokuapp.com/"
-    : "localhost:4000";
+    ? "https://conspiracy-game.herokuapp.com"
+    : "http://localhost:4000";
 
 export const socket: ClientSocket = io(socketUrl);
 
