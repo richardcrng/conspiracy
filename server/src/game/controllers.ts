@@ -43,6 +43,18 @@ export const createGame = (data: CreateGameEvent): GameBase => {
   return game;
 };
 
+export const resetGame = (gameId: string): GameBase => {
+  const game = getGameById(gameId);
+  if (game) {
+    game.status = GameStatus.LOBBY;
+    delete game.conspiracyTarget;
+    delete game.votes;
+    return game
+  } else {
+    throw new Error("Couldn't find game")
+  }
+}
+
 export const startGame = (
   gameId: string,
   customProbability?: number

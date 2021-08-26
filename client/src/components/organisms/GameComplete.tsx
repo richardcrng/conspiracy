@@ -24,11 +24,22 @@ function GameComplete({ game, player, players }: Props) {
     socket.emit(ClientEvent.SHOW_RESULTS, game.id);
   };
 
+  const handleResetGame = () => {
+    socket.emit(ClientEvent.RESET_GAME, game.id)
+  }
+
   return (
     <>
       <p>Game complete!</p>
       {showResults ? (
-        <GameResults {...{ game, player, players }} />
+        <>
+          <GameResults {...{ game, player, players }} />
+          {player.isHost && (
+            <Button primary onClick={handleResetGame}>
+              Reset game
+            </Button>
+          )}
+        </>
       ) : (
         <>
           <p>

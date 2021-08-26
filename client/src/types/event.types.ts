@@ -21,6 +21,7 @@ export enum ClientEvent {
   GET_PLAYER = "get-player",
   JOIN_GAME = "join",
   MAKE_VOTE = "make-vote",
+  RESET_GAME = 'reset-game',
   START_GAME = "start-game",
   SHOW_RESULTS = "show-results",
   UPDATE_PLAYER = "update-player",
@@ -56,6 +57,7 @@ export type ClientEventListeners = {
     playerId: string,
     vote: Vote | null
   ) => void;
+  [ClientEvent.RESET_GAME]: (gameId: string) => void;
   [ClientEvent.SHOW_RESULTS]: (gameId: string) => void;
   [ClientEvent.START_GAME]: (
     gameId: string,
