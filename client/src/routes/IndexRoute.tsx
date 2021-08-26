@@ -1,7 +1,8 @@
+import { useQuery } from "react-query";
 import { useHistory } from "react-router";
-import { Button } from "semantic-ui-react";
+import { Button, Icon, Message } from "semantic-ui-react";
 import useSocketListener from "../hooks/useSocketListener";
-import { useSocket } from "../socket";
+import { socketUrl, useSocket } from "../socket";
 import {
   ClientEvent,
   CreateGameEvent,
@@ -23,6 +24,10 @@ function IndexRoute() {
     socket.emit(ClientEvent.CREATE_GAME, data);
   };
 
+  const { isLoading, error, data } = useQuery("server-ping", () =>
+    fetch(`${socketUrl}/ping`).then((res) => res.json())
+  );
+
   return (
     <>
       <h1>🤫 Conspiracy</h1>
@@ -30,18 +35,33 @@ function IndexRoute() {
         A social game of deception, deduction and paranoia for three or more
         players.
       </p>
-      <Button primary onClick={handleNewGame}>
-        New game
-      </Button>
-      <Button
-        onClick={() => {
-          window.alert(
-            "Not implemented yet - get the game join link from your host"
-          );
-        }}
-      >
-        Join game
-      </Button>
+      {isLoading ? (
+        <>
+          <Message icon>
+            <Icon name="circle notched" loading />
+            <Message.Content>
+              <Message.Header>Please wait</Message.Header>
+              <p>We're loading the game for you.</p>
+              <p>(This can take up to 30-40s when you are starting a new game for the first time in a while - sorry! Thanks for your patience.)</p>
+            </Message.Content>
+          </Message>
+        </>
+      ) : (
+        <>
+          <Button primary onClick={handleNewGame}>
+            New game
+          </Button>
+          <Button
+            onClick={() => {
+              window.alert(
+                "Not implemented yet - get the game join link from your host"
+              );
+            }}
+          >
+            Join game
+          </Button>
+        </>
+      )}
     </>
   );
 }
