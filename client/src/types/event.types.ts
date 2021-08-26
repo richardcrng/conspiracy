@@ -21,6 +21,7 @@ export enum ClientEvent {
   GET_PLAYER = "get-player",
   JOIN_GAME = "join",
   MAKE_VOTE = "make-vote",
+  RESET_GAME = 'reset-game',
   START_GAME = "start-game",
   SHOW_RESULTS = "show-results",
   UPDATE_PLAYER = "update-player",
@@ -31,6 +32,7 @@ export enum ServerEvent {
   GAME_GOTTEN = "game-gotten",
   GAME_JOINED = "game-joined",
   GAME_NOT_FOUND = "game-not-found",
+  GAME_RESET = 'game-reset',
   GAME_UPDATED = "game-updated",
   PLAYER_GOTTEN = "player-gotten",
   PLAYER_NOT_FOUND = "player-not-found",
@@ -56,6 +58,7 @@ export type ClientEventListeners = {
     playerId: string,
     vote: Vote | null
   ) => void;
+  [ClientEvent.RESET_GAME]: (gameId: string) => void;
   [ClientEvent.SHOW_RESULTS]: (gameId: string) => void;
   [ClientEvent.START_GAME]: (
     gameId: string,
@@ -72,6 +75,7 @@ export type ServerEventListeners = {
   [ServerEvent.GAME_GOTTEN]: (gameId: string, game: GameBase) => void;
   [ServerEvent.GAME_JOINED]: (e: GameJoinedEvent) => void;
   [ServerEvent.GAME_NOT_FOUND]: () => void;
+  [ServerEvent.GAME_RESET]: (gameId: string, game: GameBase) => void;
   [ServerEvent.GAME_UPDATED]: (gameId: string, game: GameBase) => void;
   [ServerEvent.PLAYER_GOTTEN]: (playerId: string, player: Player) => void;
   [ServerEvent.PLAYER_UPDATED]: (playerId: string, player: Player) => void;
