@@ -4,7 +4,7 @@ import {
   ServerSocket,
   ServerIO,
 } from "../../../client/src/types/event.types";
-import { createGame, startGame } from "./controllers";
+import { createGame, resetGame, startGame } from "./controllers";
 import { getGameById } from "../db";
 import { joinPlayerToGame } from "../player/controllers";
 
@@ -26,6 +26,11 @@ export const addGameListeners = (socket: ServerSocket, io: ServerIO): void => {
     io.emit(ServerEvent.GAME_UPDATED, game.id, game);
     io.emit(ServerEvent.PLAYER_UPDATED, playerData.socketId, player);
   });
+
+  socket.on(ClientEvent.RESET_GAME, (gameId) => {
+    const game = resetGame(gameId)
+    io.emit(ServerEvent.GAME_UPDATED, game.id, game)
+  })
 
   socket.on(ClientEvent.SHOW_RESULTS, (gameId) => {
     io.emit(ServerEvent.RESULTS_SHOWN, gameId);
