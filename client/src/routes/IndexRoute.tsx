@@ -24,7 +24,7 @@ function IndexRoute() {
     socket.emit(ClientEvent.CREATE_GAME, data);
   };
 
-  const { isLoading, error, data } = useQuery("server-ping", () =>
+  const { isLoading } = useQuery("server-ping", () =>
     fetch(`${socketUrl}/ping`).then((res) => res.json())
   );
 
