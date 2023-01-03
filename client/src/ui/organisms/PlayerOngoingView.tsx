@@ -30,10 +30,13 @@ export default function PlayerOngoingView({
       <Alignment {...{ isInnocent }} />
       <Description {...{ conspiracyTargetName, isInnocent }} />
       <HelpButton>How do I win?</HelpButton>
-      <VoteTable {...{ players }} />
+      <VoteData>
+        <h2 className="text-2xl font-bold mb-4">Current votes</h2>
+        <PlayerVotes {...{ players }} />
+      </VoteData>
       <VoteActions>
         <div className="flex justify-center items-center content-center h-10">
-          <p className='italic text-sm'>
+          <p className="italic text-sm">
             {player.vote ? (
               <>
                 <span>
@@ -63,13 +66,13 @@ export default function PlayerOngoingView({
             className={classNames("btn w-1/2 btn-error")}
             onClick={makeVoteHandler(Vote.CONSPIRACY)}
           >
-            Conspiracy
+            {player.vote === Vote.CONSPIRACY ? "🗳️ " : ""}Conspiracy
           </button>
           <button
             className={classNames("btn w-1/2 btn-success")}
             onClick={makeVoteHandler(Vote.NO_CONSPIRACY)}
           >
-            No Conspiracy
+            No Conspiracy{player.vote === Vote.NO_CONSPIRACY ? " 🗳️" : ""}
           </button>
         </div>
       </VoteActions>
@@ -84,10 +87,10 @@ const Container = styled.div.attrs({
     "alignment"
     "description"
     "help"
-    "vote-table"
+    "vote-data"
     "vote-actions";
 
-  grid-template-rows: 15% repeat(3, min-content) minmax(auto, 1fr);
+  grid-template-rows: 15% repeat(2, min-content) repeat(2, auto);
 `
 
 const Alignment = styled(PlayerAlignment).attrs({
@@ -106,8 +109,8 @@ const HelpButton = styled.button.attrs({
   grid-area: help;
 `
 
-const VoteTable = styled(PlayerVotes)`
-  grid-area: vote-table;
+const VoteData = styled.div`
+  grid-area: vote-data;
 `
 
 const VoteActions = styled.div.attrs({
