@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocalStorage } from "react-use";
+import packageJson from "../../package.json";
 import { LocalPlayerData } from "../types/localStorage.types";
 import { generateUUID } from "../utils/data-utils";
 
@@ -10,7 +11,7 @@ interface LocalPlayer {
 
 export default function useLocalPlayer(): LocalPlayer {
   const uuid = useRef(generateUUID());
-  const [value, setValue] = useLocalStorage<LocalPlayerData>("player");
+  const [value, setValue] = useLocalStorage<LocalPlayerData>(`player-${packageJson.name}`);
 
   useEffect(() => {
     if (!value) {
