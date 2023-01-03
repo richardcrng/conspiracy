@@ -42,7 +42,12 @@ const PlayerVote = ({ hasVoted, name, rowStart }: PlayerVoteProps) => (
   <>
     <Name {...{ rowStart }}>{name}</Name>
     <Emoji {...{ rowStart }}>{hasVoted ? "🗳️" : "🤔"}</Emoji>
-    <Status {...{ rowStart }}>{hasVoted ? "vote cast" : "thinking"}</Status>
+    <Status {...{ rowStart }} style={{ opacity: hasVoted ? 1 : 0 }}>
+      vote cast
+    </Status>
+    <Status {...{ rowStart }} style={{ opacity: hasVoted ? 0 : 1 }}>
+      thinking
+    </Status>
   </>
 );
 

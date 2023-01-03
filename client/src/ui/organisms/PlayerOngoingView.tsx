@@ -37,14 +37,7 @@ export default function PlayerOngoingView({
         <HelpButton onClick={() => setIsWinConModalOpen(true)}>
           How do I win?
         </HelpButton>
-        <VoteData>
-          <p className="pb-4">
-            <span className="font-semibold">
-              All players can now discuss and cast votes.
-            </span>{" "}
-          </p>
-          <PlayerVotes {...{ players }} />
-        </VoteData>
+        <VoteData {...{ players }} />
         <VoteActions>
           <div className="flex justify-center items-center content-center h-10">
             <p className="italic text-sm">
@@ -128,8 +121,8 @@ const HelpButton = styled.button.attrs({
   grid-area: help;
 `
 
-const VoteData = styled.div.attrs({
-  className: 'w-full flex flex-col place-content-center px-4'
+const VoteData = styled(PlayerVotes).attrs({
+  className: 'flex flex-col place-content-center px-4'
 })`
   grid-area: vote-data;
 `
