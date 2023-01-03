@@ -5,3 +5,8 @@ export function assertArrayLengthAtLeastOne<E>(
     throw new Error("Expected at least one element in array");
   }
 }
+
+export type RemovePrefix<
+  Prefix extends string,
+  T extends string
+> = T extends `${Prefix}${infer Suffix}` ? Suffix : never;
