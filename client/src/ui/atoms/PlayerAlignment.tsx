@@ -11,12 +11,12 @@ export default function PlayerAlignment({ className, isInnocent, style }: Props)
     <div
       className={classNames(
         "text-3xl",
-        isInnocent ? "bg-success" : 'bg-error',
+        isInnocent ? "bg-success" : "bg-error",
         className
       )}
       {...{ style }}
     >
-      {isInnocent ? "😇 INNOCENT" : "🕵️‍♀️ CONSPIRATOR"}
+      <p>{isInnocent ? "😇 INNOCENT" : "🕵️‍♀️ CONSPIRATOR"}</p>
     </div>
   );
 }

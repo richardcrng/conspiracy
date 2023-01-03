@@ -87,11 +87,11 @@ const Container = styled.div.attrs({
     "vote-table"
     "vote-actions";
 
-  grid-template-rows: repeat(4, min-content) minmax(auto, 1fr);
+  grid-template-rows: 15% repeat(3, min-content) minmax(auto, 1fr);
 `
 
 const Alignment = styled(PlayerAlignment).attrs({
-  className: 'w-full text-center font-bold'
+  className: 'w-full text-center font-bold flex flex-col place-content-center'
 })`
   grid-area: alignment;
 `
