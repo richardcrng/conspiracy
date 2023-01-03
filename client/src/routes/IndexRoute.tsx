@@ -44,7 +44,7 @@ export default function IndexRoute(): JSX.Element {
 //       }}
 //     >
 //       <div className="flex-center" style={{ textAlign: "center" }}>
-//         <h1>{"[[ADD GAME NAME]]"}</h1>
+//         <h1>{"Conspiracy"}</h1>
 //         <Image
 //           src="https://unsplash.com/photos/C3T8KTZxTFM"
 //           style={{ maxHeight: "50%" }}
@@ -60,7 +60,7 @@ export default function IndexRoute(): JSX.Element {
 //           </Alert>
 //         ) : (
 //           <p style={{ margin: "5%" }}>
-//             {"[[ADD GAME DESCRIPTION]]"}
+//             {"A social game of deception, deduction and paranoia for three or more players."}
 //           </p>
 //         )}
 //       </div>

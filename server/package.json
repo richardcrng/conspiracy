@@ -1,5 +1,5 @@
 {
-  "name": "@new-game/server",
+  "name": "@conspiracy/server",
   "version": "0.0.1",
   "description": "Cockroach Poker Socket.io server",
   "license": "CC-BY-NC-SA-4.0",
