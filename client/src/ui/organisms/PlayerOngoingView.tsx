@@ -31,7 +31,10 @@ export default function PlayerOngoingView({
         {/* <div className='flex justify-end'>
           <button className="btn btn-xs mb-2">Remove vote</button>
         </div> */}
-        <button className="btn btn-block btn-ghost btn-xs mb-2">
+        <button
+          className="btn btn-block btn-ghost btn-xs mb-2"
+          onClick={() => onVote(null)}
+        >
           Remove vote
         </button>
         <div className="w-full btn-group">
@@ -40,6 +43,7 @@ export default function PlayerOngoingView({
               "btn w-1/2 btn-error",
               player.vote === Vote.CONSPIRACY && "btn-active"
             )}
+            onClick={() => onVote(Vote.CONSPIRACY)}
           >
             Conspiracy
           </button>
@@ -48,6 +52,7 @@ export default function PlayerOngoingView({
               "btn w-1/2 btn-success",
               player.vote === Vote.NO_CONSPIRACY && "btn-active"
             )}
+            onClick={() => onVote(Vote.NO_CONSPIRACY)}
           >
             No Conspiracy
           </button>
