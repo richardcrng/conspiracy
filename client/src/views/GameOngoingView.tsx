@@ -15,6 +15,7 @@ export default function GameOngoingView({ game, onVote, player }: Props): JSX.El
     <PlayerOngoingView
       {...{ conspiracyTargetName, onVote }}
       isInnocent={isInnocent(game, player.id)}
+      players={game.players}
     />
     // <>
     //   <p>
