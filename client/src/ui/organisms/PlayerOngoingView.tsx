@@ -87,7 +87,7 @@ const Container = styled.div.attrs({
     "vote-table"
     "vote-actions";
 
-  grid-template-rows: repeat(4, min-content) auto(0, 1fr);
+  grid-template-rows: repeat(4, min-content) minmax(auto, 1fr);
 `
 
 const Alignment = styled(PlayerAlignment).attrs({
@@ -111,7 +111,7 @@ const VoteTable = styled(PlayerVotes)`
 `
 
 const VoteActions = styled.div.attrs({
-  className: 'w-full'
+  className: 'w-full flex flex-col justify-end'
 })`
   grid-area: vote-actions;
 `
