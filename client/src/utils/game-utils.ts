@@ -14,33 +14,41 @@ export const gameLobbyReadiness = (
   }
 };
 
-export const conspiracyVictimId = (game: Game): string | null => {
+export const getConspiracyTargetId = (game: Game): string | null => {
   return game.conspiracyTargetId ? game.conspiracyTargetId : null;
 };
 
-export const conspiracyVictimName = (game: Game): string | undefined => {
-  if (hasConspiracy(game)) {
+export const getConspiracyTargetName = (game: Game): string | undefined => {
+  if (isGameWithConspiracyTarget(game)) {
     // okay to assert since conspiracy id must be a player
     return game.players[game.conspiracyTargetId]!.name;
   }
 };
 
-export const hasConspiracy = (game: Game): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
+export const isGameWithConspiracyTarget = (game: Game): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
 
 export const isConspiracyMember = (game: Game, playerId: string) => {
-  return hasConspiracy(game) && !isConspiracyVictim(game, playerId);
+  return isGameWithConspiracyTarget(game) && !isConspiracyTarget(game, playerId);
 };
 
-export const isConspiracyVictim = (game: Game, playerId: string): boolean => {
-  return hasConspiracy(game) && game.conspiracyTargetId === playerId;
+export const isConspiracyTarget = (game: Game, playerId: string): boolean => {
+  return isGameWithConspiracyTarget(game) && game.conspiracyTargetId === playerId;
 };
+
+export const isInnocent = (game: Game, playerId: string): boolean => {
+  if (isGameWithConspiracyTarget(game)) {
+    return isConspiracyTarget(game, playerId)
+  }
+
+  return true
+}
 
 export const isWinner = (game: Game, playerId: string): boolean => {
   if (isConspiracyMember(game, playerId)) {
-    return getVote(game, conspiracyVictimId(game)!) === Vote.NO_CONSPIRACY;
+    return getVote(game, getConspiracyTargetId(game)!) === Vote.NO_CONSPIRACY;
   } else {
     const playerVote = getVote(game, playerId);
-    return hasConspiracy(game)
+    return isGameWithConspiracyTarget(game)
       ? playerVote === Vote.CONSPIRACY
       : playerVote === Vote.NO_CONSPIRACY;
   }
