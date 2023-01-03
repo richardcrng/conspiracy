@@ -31,7 +31,7 @@ export default function PlayerOngoingView({
       <Description {...{ conspiracyTargetName, isInnocent }} />
       <HelpButton>How do I win?</HelpButton>
       <VoteData>
-        <h2 className="text-2xl font-bold mb-4">Current votes</h2>
+        <p className="mb-4 font-semibold">All players can now discuss and cast votes.</p>
         <PlayerVotes {...{ players }} />
       </VoteData>
       <VoteActions>
@@ -99,7 +99,9 @@ const Alignment = styled(PlayerAlignment).attrs({
   grid-area: alignment;
 `
 
-const Description = styled(PlayerAlignmentInfo)`
+const Description = styled(PlayerAlignmentInfo).attrs({
+  className: 'px-4'
+})`
   grid-area: description;
 `
 
@@ -109,7 +111,9 @@ const HelpButton = styled.button.attrs({
   grid-area: help;
 `
 
-const VoteData = styled.div`
+const VoteData = styled.div.attrs({
+  className: 'w-full flex flex-col place-content-center px-4'
+})`
   grid-area: vote-data;
 `
 
