@@ -1,5 +1,14 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
+import { GameStatus } from "../../client/src/types/game.types";
 import { GameManager } from "./game/manager";
+
+export const castVote: ClientEventListeners["CAST_VOTE"] = (
+  gameId,
+  playerId,
+  vote
+) => {
+  GameManager.for(gameId).managePlayer(playerId).castVote(vote);
+};
 
 export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (
   hostPlayer

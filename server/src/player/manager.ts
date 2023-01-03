@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { Player } from "../../../client/src/types/game.types";
+import { Player, Vote } from "../../../client/src/types/game.types";
 import { GameManager, Operation } from "../game/manager";
 
 export class PlayerManager {
@@ -56,6 +56,17 @@ export class PlayerManager {
     } else {
       return { status: "error" };
     }
+  }
+
+  /**
+   * Update a player's vote (or remove vote,
+   *  if passed `null`)
+   * @param vote Vote to cast
+   */
+  public castVote(vote: Vote | null): void {
+    this.update(p => {
+      p.vote = vote
+    })
   }
 
   public getNameOrFail(): string {

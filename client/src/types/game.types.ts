@@ -5,14 +5,14 @@ export interface GameStateCore {
   };
   status: GameStatus;
   conspiracyTargetId?: string | null;
-  votes: { [playerId: string]: Vote | null };
 }
 
 export type Game = GameStateCore;
 
 export enum GameStatus {
-  LOBBY = "LOBBY",
-  ONGOING = "ONGOING",
+  LOBBY = "lobby",
+  STARTED = "started",
+  COMPLETE = "complete",
 }
 
 export interface LocalPlayerData {
@@ -25,6 +25,7 @@ export interface Player extends LocalPlayerData {
   socketId: string;
   gameId: string;
   isHost?: boolean;
+  vote?: Vote | null;
 }
 
 export enum Vote {

@@ -1,6 +1,6 @@
 import { Socket as TClientSocket } from "socket.io-client";
 import { Socket as TServerSocket, Server as TServer } from "socket.io";
-import { Game, Player } from "./game.types";
+import { Game, Player, Vote } from "./game.types";
 
 export type ClientSocket = TClientSocket<
   ServerEventListeners,
@@ -22,6 +22,7 @@ export type ClientEventListeners = {
   GET_GAME: (gameId: string) => void;
   JOIN_GAME: (gameId: string, player: Omit<Player, "gameId">) => void;
   KICK_PLAYER: (gameId: string, playerId: string) => void;
+  CAST_VOTE: (gameId: string, playerId: string, vote: Vote | null) => void;
   START_GAME: (gameId: string) => void;
 };
 
@@ -35,6 +36,7 @@ export type ServerEventListeners = {
   GAME_UPDATED: (game: Game) => void;
   HOST_GAME_CREATED: (game: Game, hostId: string) => void;
   PLAYER_KICKED: (gameId: string, playerId: string) => void;
+  RESULTS_SHOWN: (gameId: string) => void;
 };
 
 export type ServerEvent = keyof ServerEventListeners;
