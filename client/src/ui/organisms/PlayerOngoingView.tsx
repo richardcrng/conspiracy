@@ -1,10 +1,12 @@
 import classNames from "classnames";
+import { useState } from "react";
 import styled from "styled-components";
 import { Player, Vote } from "../../types/game.types";
 import { PlayerOngoingHandlers } from "../../types/handler.types";
 import PlayerAlignment from "../atoms/PlayerAlignment";
 import PlayerAlignmentInfo from "../atoms/PlayerAlignmentInfo";
 import PlayerVotes from "../atoms/PlayerVotes";
+import PlayerWinConditionModal from "../atoms/PlayerWinConditionModal";
 
 interface Props extends PlayerOngoingHandlers {
   conspiracyTargetName?: string;
@@ -25,58 +27,69 @@ export default function PlayerOngoingView({
     player.vote === newVote ? onVote(null) : onVote(newVote)
   }
 
+  const [isWinConModalOpen, setIsWinConModalOpen] = useState(false)
+
   return (
-    <Container>
-      <Alignment {...{ isInnocent }} />
-      <Description {...{ conspiracyTargetName, isInnocent }} />
-      <HelpButton>How do I win?</HelpButton>
-      <VoteData>
-        <p className="mb-4 font-semibold">All players can now discuss and cast votes.</p>
-        <PlayerVotes {...{ players }} />
-      </VoteData>
-      <VoteActions>
-        <div className="flex justify-center items-center content-center h-10">
-          <p className="italic text-sm">
-            {player.vote ? (
-              <>
-                <span>
-                  You are voting{" "}
-                  <span
-                    className={`font-bold text-${
-                      player.vote === Vote.CONSPIRACY ? "error" : "success"
-                    }`}
-                  >
-                    {player.vote.toUpperCase()}
-                  </span>
-                </span>
-                <button
-                  className="btn btn-ghost btn-xs"
-                  onClick={makeVoteHandler(null)}
-                >
-                  X UNVOTE
-                </button>
-              </>
-            ) : (
-              <>Click below to vote</>
-            )}
+    <>
+      <Container>
+        <Alignment {...{ isInnocent }} />
+        <Description {...{ conspiracyTargetName, isInnocent }} />
+        <HelpButton onClick={() => setIsWinConModalOpen(true)}>How do I win?</HelpButton>
+        <VoteData>
+          <p className="mb-4 font-semibold">
+            All players can now discuss and cast votes.
           </p>
-        </div>
-        <div className="w-full btn-group">
-          <button
-            className={classNames("btn w-1/2 btn-error")}
-            onClick={makeVoteHandler(Vote.CONSPIRACY)}
-          >
-            {player.vote === Vote.CONSPIRACY ? "🗳️ " : ""}Conspiracy
-          </button>
-          <button
-            className={classNames("btn w-1/2 btn-success")}
-            onClick={makeVoteHandler(Vote.NO_CONSPIRACY)}
-          >
-            No Conspiracy{player.vote === Vote.NO_CONSPIRACY ? " 🗳️" : ""}
-          </button>
-        </div>
-      </VoteActions>
-    </Container>
+          <PlayerVotes {...{ players }} />
+        </VoteData>
+        <VoteActions>
+          <div className="flex justify-center items-center content-center h-10">
+            <p className="italic text-sm">
+              {player.vote ? (
+                <>
+                  <span>
+                    You are voting{" "}
+                    <span
+                      className={`font-bold text-${
+                        player.vote === Vote.CONSPIRACY ? "error" : "success"
+                      }`}
+                    >
+                      {player.vote.toUpperCase()}
+                    </span>
+                  </span>
+                  <button
+                    className="btn btn-ghost btn-xs"
+                    onClick={makeVoteHandler(null)}
+                  >
+                    X UNVOTE
+                  </button>
+                </>
+              ) : (
+                <>Click below to vote</>
+              )}
+            </p>
+          </div>
+          <div className="w-full btn-group">
+            <button
+              className={classNames("btn w-1/2 btn-error")}
+              onClick={makeVoteHandler(Vote.CONSPIRACY)}
+            >
+              {player.vote === Vote.CONSPIRACY ? "🗳️ " : ""}Conspiracy
+            </button>
+            <button
+              className={classNames("btn w-1/2 btn-success")}
+              onClick={makeVoteHandler(Vote.NO_CONSPIRACY)}
+            >
+              No Conspiracy{player.vote === Vote.NO_CONSPIRACY ? " 🗳️" : ""}
+            </button>
+          </div>
+        </VoteActions>
+      </Container>
+      <PlayerWinConditionModal
+        {...{ isInnocent }}
+        isOpen={isWinConModalOpen}
+        onClose={() => setIsWinConModalOpen(false)}
+      />
+    </>
   );
 }
 
