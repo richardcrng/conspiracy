@@ -24,7 +24,7 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
         onClick={onClose}
       >
         <div className="modal-box">
-          <h3 className="font-bold text-xl">
+          <h3 className="font-bold text-2xl mb-2">
             <button
               className="btn btn-sm btn-ghost btn-circle absolute right-2 top-2"
               onClick={onClose}
@@ -45,8 +45,9 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
             {isInnocent ? (
               <>
                 <p className="py-2">
-                  As an <FlavourText.Innocent />, you win by identifying if
-                  there is a <FlavourText.Conspiracy /> or not.
+                  As an <FlavourText.Innocent />, you win if, at game end, your
+                  vote correctly identifies whether there is a{" "}
+                  <FlavourText.Conspiracy /> or not.
                 </p>
                 <ul className="py-2 list-disc list-outside pl-6">
                   <li className="my-1">
@@ -54,10 +55,8 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
                     <FlavourText.Conspirator /> against you
                   </li>
                   <li className="my-1">
-                    <FlavourText.NoConspiracy />:
-                    every single other player is{" "}
-                    <FlavourText.Innocent />{" "}
-                    with you
+                    <FlavourText.NoConspiracy />: every single other player is{" "}
+                    <FlavourText.Innocent /> with you
                   </li>
                 </ul>
                 <p className="py-2">
@@ -65,13 +64,24 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
                 </p>
               </>
             ) : (
-              <p>
-                As a <span className="text-error font-bold">CONSPIRATOR</span>,
-                you win if the single{" "}
-                <span className="text-success font-bold">INNOCENT</span> player
-                believes there is no conspiracy.
-              </p>
+              <>
+                <p className="py-2">
+                  As an <FlavourText.Conspirator />, you win if, at game end,
+                  the single <FlavourText.Innocent /> player has voted{" "}
+                  <FlavourText.NoConspiracy />.
+                </p>
+                <p className="py-2">
+                  Your vote actually doesn't matter - it's "going through the
+                  motions" whilst you pretend to be an Innocent player.
+                </p>
+                <p className="py-2">
+                  See if you can fool the <FlavourText.Innocent />!
+                </p>
+              </>
             )}
+            <p className="py-2 text-lg font-semibold">
+              The game ends when every player has cast their vote.
+            </p>
           </div>
         </div>
       </div>

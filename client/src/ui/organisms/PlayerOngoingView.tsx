@@ -34,10 +34,14 @@ export default function PlayerOngoingView({
       <Container>
         <Alignment {...{ isInnocent }} />
         <Description {...{ conspiracyTargetName, isInnocent }} />
-        <HelpButton onClick={() => setIsWinConModalOpen(true)}>How do I win?</HelpButton>
+        <HelpButton onClick={() => setIsWinConModalOpen(true)}>
+          How do I win?
+        </HelpButton>
         <VoteData>
-          <p className="mb-4 font-semibold">
-            All players can now discuss and cast votes.
+          <p className="pb-4">
+            <span className="font-semibold">
+              All players can now discuss and cast votes.
+            </span>{" "}
           </p>
           <PlayerVotes {...{ players }} />
         </VoteData>
