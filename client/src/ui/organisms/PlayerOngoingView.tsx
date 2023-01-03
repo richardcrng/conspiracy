@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { PlayerOngoingHandlers } from "../../types/handler.types";
+import PlayerAlignment from "../atoms/PlayerAlignment";
 
 interface Props extends PlayerOngoingHandlers {
   conspiracyTargetName?: string;
@@ -11,23 +12,12 @@ export default function PlayerOngoingView({
   isInnocent,
   onVote
 }: Props): JSX.Element {
-  if (isInnocent) {
-    return (
-      <Container>
-        <Alignment>
-          <p>😇 INNOCENT</p>
-        </Alignment>
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <Alignment>
-          <p>🕵️‍♀️ CONSPIRATOR</p>
-        </Alignment>
-      </Container>
-    );
-  }
+
+  return (
+    <Container>
+      <Alignment {...{ isInnocent }} />
+    </Container>
+  );
 }
 
 const Container = styled.div`
@@ -39,6 +29,8 @@ const Container = styled.div`
     "vote-actions";
 `
 
-const Alignment = styled.div`
+const Alignment = styled(PlayerAlignment).attrs({
+  className: 'text-center font-bold py-4'
+})`
   grid-area: alignment;
 `
