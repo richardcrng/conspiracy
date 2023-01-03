@@ -8,6 +8,8 @@ import {
   Player,
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
+import { generatePossibleConspiracyTargetId } from '../../../client/src/utils/game-utils';
+import { assertArrayLengthAtLeastOne } from '../../../client/src/utils/type-utils';
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
 
@@ -193,8 +195,17 @@ export class GameManager {
   }
 
   public start(): void {
+    const playerList = this.playerIds();
+    assertArrayLengthAtLeastOne(playerList)
+
     this._mutate((g) => {
       g.status = GameStatus.ONGOING;
+
+      // pick conspiracy target
+      g.conspiracyTargetId = generatePossibleConspiracyTargetId(
+        playerList,
+        g.settings.pctProbabilityConspiracy
+      )
     });
 
     // each player starts with a null vote
