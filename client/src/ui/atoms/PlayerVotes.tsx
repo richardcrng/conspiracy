@@ -29,7 +29,7 @@ export default function PlayerVotes({ className, players }: Props): JSX.Element 
 const VoteContainer = styled.div.attrs({
   className: 'grid gap-x-2 gap-y-4'
 })`
-  grid-template-columns: repeat(3, min-content);
+  grid-template-columns: repeat(2, min-content) minmax(min-content, auto);
 `
 
 interface PlayerVoteProps {

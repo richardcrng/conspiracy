@@ -21,6 +21,10 @@ export default function PlayerOngoingView({
   players
 }: Props): JSX.Element {
 
+  const makeVoteHandler = (newVote: Vote | null) => () => {
+    player.vote === newVote ? onVote(null) : onVote(newVote)
+  }
+
   return (
     <Container>
       <Alignment {...{ isInnocent }} />
@@ -28,31 +32,42 @@ export default function PlayerOngoingView({
       <HelpButton>How do I win?</HelpButton>
       <VoteTable {...{ players }} />
       <VoteActions>
-        {/* <div className='flex justify-end'>
-          <button className="btn btn-xs mb-2">Remove vote</button>
-        </div> */}
-        <button
-          className="btn btn-block btn-ghost btn-xs mb-2"
-          onClick={() => onVote(null)}
-        >
-          Remove vote
-        </button>
+        <div className="flex justify-center items-center content-center h-10">
+          <p className='italic text-sm'>
+            {player.vote ? (
+              <>
+                <span>
+                  You are voting{" "}
+                  <span
+                    className={`font-bold text-${
+                      player.vote === Vote.CONSPIRACY ? "error" : "success"
+                    }`}
+                  >
+                    {player.vote.toUpperCase()}
+                  </span>
+                </span>
+                <button
+                  className="btn btn-ghost btn-xs"
+                  onClick={makeVoteHandler(null)}
+                >
+                  X UNVOTE
+                </button>
+              </>
+            ) : (
+              <>Click below to vote</>
+            )}
+          </p>
+        </div>
         <div className="w-full btn-group">
           <button
-            className={classNames(
-              "btn w-1/2 btn-error",
-              player.vote === Vote.CONSPIRACY && "btn-active"
-            )}
-            onClick={() => onVote(Vote.CONSPIRACY)}
+            className={classNames("btn w-1/2 btn-error")}
+            onClick={makeVoteHandler(Vote.CONSPIRACY)}
           >
             Conspiracy
           </button>
           <button
-            className={classNames(
-              "btn w-1/2 btn-success",
-              player.vote === Vote.NO_CONSPIRACY && "btn-active"
-            )}
-            onClick={() => onVote(Vote.NO_CONSPIRACY)}
+            className={classNames("btn w-1/2 btn-success")}
+            onClick={makeVoteHandler(Vote.NO_CONSPIRACY)}
           >
             No Conspiracy
           </button>
