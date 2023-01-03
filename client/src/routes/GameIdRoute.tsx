@@ -23,7 +23,8 @@ export default function GameIdRoute(): JSX.Element {
     return <Redirect to={PATHS.index} />;
   }
 
-  if (!game.data.players[player.data.id]) {
+  const playerData = game.data.players[player.data.id];
+  if (!playerData) {
     const redirect =
       game.data.status === GameStatus.LOBBY
         ? PATHS.lobbyForGameId(game.data.id)
@@ -32,5 +33,7 @@ export default function GameIdRoute(): JSX.Element {
     return <Redirect to={redirect} />;
   }
 
-  return <GameIdView game={game.data} />;
+  return (
+    <GameIdView game={game.data} player={playerData} />
+  );
 }

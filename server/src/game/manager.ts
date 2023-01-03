@@ -8,7 +8,7 @@ import {
   Player,
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
-import { generatePossibleConspiracyTargetId } from '../../../client/src/utils/game-utils';
+import { generatePossibleConspiracyTargetId } from '../../../client/src/utils/setup-utils';
 import { assertArrayLengthAtLeastOne } from '../../../client/src/utils/type-utils';
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
