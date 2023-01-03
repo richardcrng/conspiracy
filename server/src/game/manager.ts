@@ -193,6 +193,11 @@ export class GameManager {
     this._mutate((g) => {
       g.status = GameStatus.ONGOING;
     });
+
+    // each player starts with a null vote
+    this.manageEachPlayer(p => {
+      p.castVote(null)
+    })
   }
 
   /**

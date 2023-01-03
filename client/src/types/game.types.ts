@@ -11,7 +11,7 @@ export type Game = GameStateCore;
 
 export enum GameStatus {
   LOBBY = "lobby",
-  STARTED = "started",
+  ONGOING = "ongoing",
   COMPLETE = "complete",
 }
 

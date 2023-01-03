@@ -3,6 +3,7 @@ import useGame from "../hooks/useGame";
 import useSocketPlayer from "../hooks/useSocketPlayer";
 import { GameStatus } from "../types/game.types";
 import IntroFrame from "../ui/molecules/IntroFrame";
+import GameIdView from "../views/GameIdView";
 import { PATHS } from "./paths";
 
 export default function GameIdRoute(): JSX.Element {
@@ -31,9 +32,5 @@ export default function GameIdRoute(): JSX.Element {
     return <Redirect to={redirect} />;
   }
 
-  return (
-    <IntroFrame>
-      <p>Game has started!</p>
-    </IntroFrame>
-  );
+  return <GameIdView game={game.data} />;
 }
