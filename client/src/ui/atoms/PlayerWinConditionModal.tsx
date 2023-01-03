@@ -70,12 +70,12 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
                   the single <FlavourText.Innocent /> player has voted{" "}
                   <FlavourText.NoConspiracy />.
                 </p>
-                <p className="py-2">
+                <p className="py-2 italic font-light">
                   Your vote actually doesn't matter - it's "going through the
                   motions" whilst you pretend to be an Innocent player.
                 </p>
                 <p className="py-2">
-                  See if you can fool the <FlavourText.Innocent />!
+                  See if you can fool the <FlavourText.Innocent /> into thinking that you are all Innocent with them!
                 </p>
               </>
             )}
