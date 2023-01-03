@@ -97,6 +97,9 @@ export class GameManager {
         [host.id]: host,
       },
       status: GameStatus.LOBBY,
+      settings: {
+        pctProbabilityConspiracy: 50
+      }
     };
 
     this._set(newGame);

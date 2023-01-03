@@ -5,6 +5,7 @@ export interface GameStateCore {
   };
   status: GameStatus;
   conspiracyTargetId?: string | null;
+  settings: GameSettings;
 }
 
 export type Game = GameStateCore;
@@ -31,4 +32,8 @@ export interface Player extends LocalPlayerData {
 export enum Vote {
   CONSPIRACY = "conspiracy",
   NO_CONSPIRACY = "no conspiracy",
+}
+
+export interface GameSettings {
+  pctProbabilityConspiracy: number;
 }
