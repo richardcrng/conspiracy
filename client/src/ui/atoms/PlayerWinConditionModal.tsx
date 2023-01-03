@@ -9,29 +9,73 @@ interface Props {
 export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }: Props): JSX.Element {
   return (
     <>
-      <input type="checkbox" className="modal-toggle" onClick={onClose} checked={isOpen} />
-      <div className={classNames("modal modal-bottom sm:modal-middle", isOpen && "model-open")} onClick={onClose}>
+      <input
+        type="checkbox"
+        className="modal-toggle"
+        onClick={onClose}
+        checked={isOpen}
+      />
+      <div
+        className={classNames(
+          "modal modal-bottom sm:modal-middle",
+          isOpen && "model-open"
+        )}
+        onClick={onClose}
+      >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
+          <h3 className="font-bold text-xl">
+            <button
+              className="btn btn-sm btn-ghost btn-circle absolute right-2 top-2"
+              onClick={onClose}
+            >
+              ✕
+            </button>
             {isInnocent ? (
               <>
-                As an <span className="text-success">INNOCENT</span>, you win by
-                identifying if there is a conspiracy or not.
+                Is there a{" "}
+                <span className="italic font-semibold mr-0.5">CONSPIRACY</span>?
               </>
             ) : (
               <>
-                As a <span className="text-error">CONSPIRATOR</span>, you win if
-                the single <span className="text-success">INNOCENT</span> player
-                believes there is no conspiracy.
+                Protect the{" "}
+                <span className="italic font-semibold mr-0.5">CONSPIRACY</span>!
               </>
             )}
           </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
-          <div className="modal-action">
-            <button className="btn" onClick={onClose}>Yay!</button>
+          <div>
+            {isInnocent ? (
+              <>
+                <p className="py-2">
+                  As an <span className="text-success font-bold">INNOCENT</span>
+                  , you win by identifying if there is a{" "}
+                  <span className="italic font-bold">CONSPIRACY</span> or not.
+                </p>
+                <ul className="py-2 list-disc list-outside pl-6">
+                  <li className="my-1">
+                    <span className="italic font-bold">CONSPIRACY</span>: every
+                    single other player is a{" "}
+                    <span className="font-bold text-error">CONSPIRATOR</span>{" "}
+                    against you
+                  </li>
+                  <li className="my-1">
+                    <span className="italic font-bold">NO CONSPIRACY</span>:
+                    every single other player is{" "}
+                    <span className="font-bold text-success">INNOCENT</span>{" "}
+                    with you
+                  </li>
+                </ul>
+                <p className="py-2">
+                  See if you can correctly deduce and vote correctly!
+                </p>
+              </>
+            ) : (
+              <p>
+                As a <span className="text-error font-bold">CONSPIRATOR</span>,
+                you win if the single{" "}
+                <span className="text-success font-bold">INNOCENT</span> player
+                believes there is no conspiracy.
+              </p>
+            )}
           </div>
         </div>
       </div>
