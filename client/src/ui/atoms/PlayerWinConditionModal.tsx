@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import FlavourText from "./FlavourText";
 
 interface Props {
   isInnocent: boolean;
@@ -32,13 +33,11 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
             </button>
             {isInnocent ? (
               <>
-                Is there a{" "}
-                <span className="italic font-semibold mr-0.5">CONSPIRACY</span>?
+                Is there a <FlavourText.Conspiracy className="mr-0.5" />?
               </>
             ) : (
               <>
-                Protect the{" "}
-                <span className="italic font-semibold mr-0.5">CONSPIRACY</span>!
+                Protect the <FlavourText.Conspiracy className="mr-0.5" />!
               </>
             )}
           </h3>
@@ -46,21 +45,18 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
             {isInnocent ? (
               <>
                 <p className="py-2">
-                  As an <span className="text-success font-bold">INNOCENT</span>
-                  , you win by identifying if there is a{" "}
-                  <span className="italic font-bold">CONSPIRACY</span> or not.
+                  As an <FlavourText.Innocent />, you win by identifying if
+                  there is a <FlavourText.Conspiracy /> or not.
                 </p>
                 <ul className="py-2 list-disc list-outside pl-6">
                   <li className="my-1">
-                    <span className="italic font-bold">CONSPIRACY</span>: every
-                    single other player is a{" "}
-                    <span className="font-bold text-error">CONSPIRATOR</span>{" "}
-                    against you
+                    <FlavourText.Conspiracy />: every single other player is a{" "}
+                    <FlavourText.Conspirator /> against you
                   </li>
                   <li className="my-1">
-                    <span className="italic font-bold">NO CONSPIRACY</span>:
+                    <FlavourText.NoConspiracy />:
                     every single other player is{" "}
-                    <span className="font-bold text-success">INNOCENT</span>{" "}
+                    <FlavourText.Innocent />{" "}
                     with you
                   </li>
                 </ul>
