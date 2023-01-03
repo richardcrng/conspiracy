@@ -20,11 +20,12 @@ export const conspiracyVictimId = (game: Game): string | null => {
 
 export const conspiracyVictimName = (game: Game): string | undefined => {
   if (hasConspiracy(game)) {
-    return game.players[game.conspiracyTargetId!].name;
+    // okay to assert since conspiracy id must be a player
+    return game.players[game.conspiracyTargetId]!.name;
   }
 };
 
-export const hasConspiracy = (game: Game) => !!game.conspiracyTargetId;
+export const hasConspiracy = (game: Game): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
 
 export const isConspiracyMember = (game: Game, playerId: string) => {
   return hasConspiracy(game) && !isConspiracyVictim(game, playerId);
