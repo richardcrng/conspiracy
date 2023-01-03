@@ -1,53 +1,22 @@
-export enum GameStatus {
-  LOBBY = "lobby",
-  STARTED = "started",
-  COMPLETE = "complete",
-}
+import { LocalPlayerData } from "./localStorage.types";
 
-export interface Player {
-  socketId: string;
-  gameId?: string;
-  name?: string;
-  isHost?: boolean;
-}
-
-export type Game = GameBase | GameInLobby | GameOngoing;
-
-export type GameOngoing = GameConspiracyOngoing | GameNoConspiracyOngoing;
-
-export enum Vote {
-  CONSPIRACY = "conspiracy",
-  NO_CONSPIRACY = "no conspiracy",
-}
-
-export interface GameBase {
+export interface GameStateCore {
   id: string;
   players: {
-    [playerName: string]: Player;
+    [playerSocketId: string]: Player;
   };
   status: GameStatus;
-  conspiracyTarget?: Player["name"] | null;
-  votes?: { [K in keyof GameBase["players"]]: Vote };
 }
 
-export interface GameInLobby extends GameBase {
-  status: GameStatus.LOBBY;
-  conspiracyTarget: never;
-  votes: never;
+export type Game = GameStateCore;
+
+export enum GameStatus {
+  LOBBY = "LOBBY",
+  ONGOING = "ONGOING",
 }
 
-export interface GameNoConspiracyOngoing extends GameBase {
-  conspiracyTarget: null;
-  status: GameStatus.STARTED;
-}
-
-export interface GameConspiracyOngoing extends GameBase {
-  conspiracyTarget: Player["name"];
-  status: GameStatus.STARTED;
-}
-
-export interface OngoingGame extends GameBase {
-  status: GameStatus.STARTED;
-  conspiracyTarget: Player["name"] | null;
-  votes: { [K in keyof GameBase["players"]]: Vote };
+export interface Player extends LocalPlayerData {
+  socketId: string;
+  gameId: string;
+  isHost?: boolean;
 }

@@ -5,11 +5,13 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "noUncheckedIndexedAccess": true,
     "strict": true,
     "outDir": "./build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "jsx": "react-jsx"
   }
 }

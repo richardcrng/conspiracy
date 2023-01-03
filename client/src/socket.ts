@@ -4,14 +4,14 @@ import { ClientSocket } from "./types/event.types";
 
 export const socketUrl =
   process.env.NODE_ENV === "production"
-    ? "https://conspiracy.server.rcr.dev"
+    ? "https://new-game.server.rcr.dev"
     : "http://localhost:4000";
 
 export const socket: ClientSocket = io(socketUrl);
 
 export const SocketContext = createContext(socket);
 
-export function useSocket() {
+export function useSocket(): ClientSocket {
   const [hasConnected, setHasConnected] = useState(false);
   const socket = useContext(SocketContext);
 
