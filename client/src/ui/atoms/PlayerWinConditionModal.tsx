@@ -11,6 +11,7 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
   return (
     <>
       <input
+        defaultChecked
         type="checkbox"
         className="modal-toggle"
         onClick={onClose}
