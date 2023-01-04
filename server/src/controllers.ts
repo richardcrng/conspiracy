@@ -1,13 +1,22 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
 import { GameStatus } from "../../client/src/types/game.types";
 import { GameManager } from "./game/manager";
+import { isEveryPlayerVoting } from '../../client/src/utils/game-utils';
 
 export const castVote: ClientEventListeners["CAST_VOTE"] = (
   gameId,
   playerId,
   vote
 ) => {
-  GameManager.for(gameId).managePlayer(playerId).castVote(vote);
+  const gameManager = GameManager.for(gameId)
+  if (gameManager.snapshot()?.status === GameStatus.COMPLETE) return
+  
+  gameManager.managePlayer(playerId).castVote(vote);
+  gameManager.update(g => {
+    if (isEveryPlayerVoting(g.players)) {
+      g.status = GameStatus.COMPLETE
+    }
+  })
 };
 
 export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (
