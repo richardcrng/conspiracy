@@ -4,7 +4,7 @@ import { ClientSocket } from "./types/event.types";
 
 export const socketUrl =
   process.env.NODE_ENV === "production"
-    ? "https://conspiracy.server.rcr.dev"
+    ? "https://conspiracy.server.upsink.games"
     : "http://localhost:4000";
 
 export const socket: ClientSocket = io(socketUrl);
