@@ -13,9 +13,7 @@ export default function GameIdRoute(): JSX.Element {
   const player = useSocketPlayer();
 
   if (game.loading) {
-    return (
-      <LoadingGameIdView {...{ gameId }} />
-    );
+    return <LoadingGameIdView {...{ gameId }} />;
   }
 
   if (!game.data) {

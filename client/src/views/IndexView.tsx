@@ -7,8 +7,11 @@ interface Props {
   onNavigateToHostGame(): void;
 }
 
-export default function IndexView({ onHostNew, onNavigateToHostGame, onNavigateToJoinGame }: Props): JSX.Element {
-
+export default function IndexView({
+  onHostNew,
+  onNavigateToHostGame,
+  onNavigateToJoinGame,
+}: Props): JSX.Element {
   const handleTryJoinGame = () => {
     const gameId = window.prompt(
       `Please enter the 5 character game ID provided by your host, e.g. ${generateRandomGameId()}`

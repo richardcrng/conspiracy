@@ -6,14 +6,12 @@ type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-export default function IntroFrame({ className, children }: Props): JSX.Element {
+export default function IntroFrame({
+  className,
+  children,
+}: Props): JSX.Element {
   return (
-    <div className={
-      classNames(
-        "h-full",
-        className
-      )
-    }>
+    <div className={classNames("h-full", className)}>
       <div className="flex flex-col gap-y-2">
         <h1 className="text-3xl font-bold">{"Conspiracy"}</h1>
         <Image
