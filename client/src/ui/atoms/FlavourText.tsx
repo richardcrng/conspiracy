@@ -1,11 +1,11 @@
-import classNames from 'classnames';
+import classNames from "classnames";
 import { fontStyle, fontWeight, TFontWeight } from "tailwindcss-classnames";
-import { twClasses } from '../../utils/tailwind-utils';
-import { RemovePrefix } from '../../utils/type-utils';
+import { twClasses } from "../../utils/tailwind-utils";
+import { RemovePrefix } from "../../utils/type-utils";
 
 type Props = TextProps & {
-  text: 'conspiracy' | 'no conspiracy' | 'conspirator' | 'innocent'
-}
+  text: "conspiracy" | "no conspiracy" | "conspirator" | "innocent";
+};
 
 export default function FlavourText({ text, ...rest }: Props): JSX.Element {
   switch (text) {
@@ -23,7 +23,7 @@ export default function FlavourText({ text, ...rest }: Props): JSX.Element {
 interface TextProps {
   className?: string;
   italic?: boolean;
-  boldness?: RemovePrefix<'font-', TFontWeight>;
+  boldness?: RemovePrefix<"font-", TFontWeight>;
   // color?: RemovePrefix<'text-', TTextColor> | "success" | "error";
 }
 

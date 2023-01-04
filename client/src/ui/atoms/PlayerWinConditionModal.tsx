@@ -7,7 +7,11 @@ interface Props {
   onClose?(): void;
 }
 
-export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }: Props): JSX.Element {
+export default function PlayerWinConditionModal({
+  isInnocent,
+  isOpen,
+  onClose,
+}: Props): JSX.Element {
   return (
     <>
       <input
@@ -76,7 +80,8 @@ export default function PlayerWinConditionModal({ isInnocent, isOpen, onClose }:
                   motions" whilst you pretend to be an Innocent player.
                 </p>
                 <p className="py-2">
-                  See if you can fool the <FlavourText.Innocent /> into thinking that you are all Innocent with them!
+                  See if you can fool the <FlavourText.Innocent /> into thinking
+                  that you are all Innocent with them!
                 </p>
               </>
             )}

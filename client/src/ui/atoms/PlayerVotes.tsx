@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { Player } from "../../types/game.types";
 
 interface Props {
@@ -6,7 +6,10 @@ interface Props {
   players: Record<string, Player>;
 }
 
-export default function PlayerVotes({ className, players }: Props): JSX.Element {
+export default function PlayerVotes({
+  className,
+  players,
+}: Props): JSX.Element {
   return (
     <div className={className}>
       <VoteContainer>
@@ -14,11 +17,7 @@ export default function PlayerVotes({ className, players }: Props): JSX.Element 
           const hasVoted = typeof vote === "string";
 
           return (
-            <PlayerVote
-              key={id}
-              {...{ hasVoted, name }}
-              rowStart={idx + 1}
-            />
+            <PlayerVote key={id} {...{ hasVoted, name }} rowStart={idx + 1} />
           );
         })}
       </VoteContainer>
@@ -27,10 +26,10 @@ export default function PlayerVotes({ className, players }: Props): JSX.Element 
 }
 
 const VoteContainer = styled.div.attrs({
-  className: 'grid gap-x-2 gap-y-4'
+  className: "grid gap-x-2 gap-y-4",
 })`
   grid-template-columns: repeat(2, min-content) minmax(min-content, auto);
-`
+`;
 
 interface PlayerVoteProps {
   hasVoted: boolean;
@@ -52,11 +51,11 @@ const PlayerVote = ({ hasVoted, name, rowStart }: PlayerVoteProps) => (
 );
 
 const Name = styled.span.attrs({
-  className: 'font-bold'
+  className: "font-bold",
 })`
   grid-row-start: ${({ rowStart }: { rowStart: number }) => rowStart};
   grid-column-start: 1;
-`
+`;
 
 const Emoji = styled.span`
   grid-row-start: ${({ rowStart }: { rowStart: number }) => rowStart};
@@ -64,7 +63,7 @@ const Emoji = styled.span`
 `;
 
 const Status = styled.span.attrs({
-  className: 'italic'
+  className: "italic",
 })`
   grid-row-start: ${({ rowStart }: { rowStart: number }) => rowStart};
   grid-column-start: 3;

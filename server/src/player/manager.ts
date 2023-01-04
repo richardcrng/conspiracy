@@ -64,9 +64,9 @@ export class PlayerManager {
    * @param vote Vote to cast
    */
   public castVote(vote: Vote | null): void {
-    this.update(p => {
-      p.vote = vote
-    })
+    this.update((p) => {
+      p.vote = vote;
+    });
   }
 
   public getNameOrFail(): string {

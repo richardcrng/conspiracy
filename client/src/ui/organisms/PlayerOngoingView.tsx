@@ -20,14 +20,13 @@ export default function PlayerOngoingView({
   isInnocent,
   onVote,
   player,
-  players
+  players,
 }: Props): JSX.Element {
-
   const makeVoteHandler = (newVote: Vote | null) => () => {
-    player.vote === newVote ? onVote(null) : onVote(newVote)
-  }
+    player.vote === newVote ? onVote(null) : onVote(newVote);
+  };
 
-  const [isWinConModalOpen, setIsWinConModalOpen] = useState(false)
+  const [isWinConModalOpen, setIsWinConModalOpen] = useState(false);
 
   return (
     <>
@@ -92,7 +91,7 @@ export default function PlayerOngoingView({
 }
 
 const Container = styled.div.attrs({
-  className: 'h-full gap-y-4 justify-items-center grid'
+  className: "h-full gap-y-4 justify-items-center grid",
 })`
   grid-template-areas:
     "alignment"
@@ -103,40 +102,40 @@ const Container = styled.div.attrs({
     "vote-actions";
 
   grid-template-rows: 15% repeat(3, min-content) repeat(2, auto);
-`
+`;
 
 const Alignment = styled(PlayerAlignment).attrs({
-  className: 'w-full text-center font-bold flex flex-col place-content-center'
+  className: "w-full text-center font-bold flex flex-col place-content-center",
 })`
   grid-area: alignment;
-`
+`;
 
 const Description = styled(PlayerAlignmentInfo).attrs({
-  className: 'px-4'
+  className: "px-4",
 })`
   grid-area: description;
-`
+`;
 
 const Message = styled.h2.attrs({
-  className: 'font-semibold'
+  className: "font-semibold",
 })`
   grid-area: message;
-`
+`;
 
 const HelpButton = styled.button.attrs({
-  className: 'btn btn-sm btn-block'
+  className: "btn btn-sm btn-block",
 })`
   grid-area: help;
-`
+`;
 
 const VoteData = styled(PlayerVotes).attrs({
-  className: 'flex flex-col place-content-center px-4'
+  className: "flex flex-col place-content-center px-4",
 })`
   grid-area: vote-data;
-`
+`;
 
 const VoteActions = styled.div.attrs({
-  className: 'w-full flex flex-col justify-end'
+  className: "w-full flex flex-col justify-end",
 })`
   grid-area: vote-actions;
-`
+`;

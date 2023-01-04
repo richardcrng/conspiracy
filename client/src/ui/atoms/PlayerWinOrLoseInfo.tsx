@@ -10,7 +10,11 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-export default function PlayerWinOrLoseInfo({ className, playerOutcome, style }: Props): JSX.Element {
+export default function PlayerWinOrLoseInfo({
+  className,
+  playerOutcome,
+  style,
+}: Props): JSX.Element {
   switch (playerOutcome) {
     case PlayerOutcome.CONSPIRATOR_WIN:
       return (

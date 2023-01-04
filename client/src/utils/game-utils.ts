@@ -1,4 +1,10 @@
-import { Game, GameOutcome, Player, PlayerOutcome, Vote } from '../types/game.types'
+import {
+  Game,
+  GameOutcome,
+  Player,
+  PlayerOutcome,
+  Vote,
+} from "../types/game.types";
 
 export const gameLobbyReadiness = (
   game: Game
@@ -34,33 +40,41 @@ export const getGameHost = (game: Game): Player & { isHost: true } => {
   return host;
 };
 
-export const isEveryPlayerVoting = (players: Record<string, Player>): players is Record<string, Player & { vote: Vote }> => {
+export const isEveryPlayerVoting = (
+  players: Record<string, Player>
+): players is Record<string, Player & { vote: Vote }> => {
   for (const playerId in players) {
-    if (!(players[playerId]?.vote)) {
-      return false
+    if (!players[playerId]?.vote) {
+      return false;
     }
   }
-  
-  return true
-}
 
-export const isGameWithConspiracyTarget = (game: Game): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
+  return true;
+};
+
+export const isGameWithConspiracyTarget = (
+  game: Game
+): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
 
 export const isConspiracyMember = (game: Game, playerId: string) => {
-  return isGameWithConspiracyTarget(game) && !isConspiracyTarget(game, playerId);
+  return (
+    isGameWithConspiracyTarget(game) && !isConspiracyTarget(game, playerId)
+  );
 };
 
 export const isConspiracyTarget = (game: Game, playerId: string): boolean => {
-  return isGameWithConspiracyTarget(game) && game.conspiracyTargetId === playerId;
+  return (
+    isGameWithConspiracyTarget(game) && game.conspiracyTargetId === playerId
+  );
 };
 
 export const isInnocent = (game: Game, playerId: string): boolean => {
   if (isGameWithConspiracyTarget(game)) {
-    return isConspiracyTarget(game, playerId)
+    return isConspiracyTarget(game, playerId);
   }
 
-  return true
-}
+  return true;
+};
 
 export const isWinner = (game: Game, playerId: string): boolean => {
   if (isConspiracyMember(game, playerId)) {
@@ -73,9 +87,18 @@ export const isWinner = (game: Game, playerId: string): boolean => {
   }
 };
 
-export const isWinOutcome = (outcome: PlayerOutcome): outcome is PlayerOutcome.CONSPIRATOR_WIN | PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY | PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY => {
-  return [PlayerOutcome.CONSPIRATOR_WIN, PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY, PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY].includes(outcome)
-}
+export const isWinOutcome = (
+  outcome: PlayerOutcome
+): outcome is
+  | PlayerOutcome.CONSPIRATOR_WIN
+  | PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY
+  | PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY => {
+  return [
+    PlayerOutcome.CONSPIRATOR_WIN,
+    PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY,
+    PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY,
+  ].includes(outcome);
+};
 
 export const getGameOutcome = (game: Game): GameOutcome => {
   const isConspiracy = typeof game.conspiracyTargetId === "string";
@@ -86,11 +109,14 @@ export const getGameOutcome = (game: Game): GameOutcome => {
       : GameOutcome.CONSPIRATORS_WIN;
   }
 
-  return GameOutcome.CALM_INNOCENTS_WIN
-}
+  return GameOutcome.CALM_INNOCENTS_WIN;
+};
 
-export const getPlayerOutcome = (game: Game, playerId: string): PlayerOutcome => {
-  const isConspiracy = typeof game.conspiracyTargetId === 'string'
+export const getPlayerOutcome = (
+  game: Game,
+  playerId: string
+): PlayerOutcome => {
+  const isConspiracy = typeof game.conspiracyTargetId === "string";
 
   if (isConspiracy) {
     return isConspiracyTarget(game, playerId)
@@ -98,19 +124,20 @@ export const getPlayerOutcome = (game: Game, playerId: string): PlayerOutcome =>
         ? PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY
         : PlayerOutcome.INNOCENT_LOSE_VS_CONSPIRACY
       : isWinner(game, playerId)
-        ? PlayerOutcome.CONSPIRATOR_WIN
-        : PlayerOutcome.CONSPIRATOR_LOSE
+      ? PlayerOutcome.CONSPIRATOR_WIN
+      : PlayerOutcome.CONSPIRATOR_LOSE;
   }
 
   return getVote(game, playerId) === Vote.NO_CONSPIRACY
     ? PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY
-    : PlayerOutcome.INNOCENT_LOSE_NO_CONSPIRACY
-}
+    : PlayerOutcome.INNOCENT_LOSE_NO_CONSPIRACY;
+};
 
 export const getVote = (game: Game, playerId: string): Vote | null => {
   const player = game.players[playerId];
-  if (!player) throw new Error(`Can't get vote for non-existent player ${playerId}`)
-  return player.vote ?? null
+  if (!player)
+    throw new Error(`Can't get vote for non-existent player ${playerId}`);
+  return player.vote ?? null;
 };
 
 export const hasVoted = (game: Game, playerId: string): boolean =>

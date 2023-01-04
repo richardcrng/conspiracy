@@ -6,7 +6,11 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-export default function PlayerAlignment({ className, isInnocent, style }: Props): JSX.Element {
+export default function PlayerAlignment({
+  className,
+  isInnocent,
+  style,
+}: Props): JSX.Element {
   return (
     <div
       className={classNames(

@@ -11,7 +11,9 @@ interface LocalPlayer {
 
 export default function useLocalPlayer(): LocalPlayer {
   const uuid = useRef(generateUUID());
-  const [value, setValue] = useLocalStorage<LocalPlayerData>(`player-${packageJson.name}`);
+  const [value, setValue] = useLocalStorage<LocalPlayerData>(
+    `player-${packageJson.name}`
+  );
 
   useEffect(() => {
     if (!value) {

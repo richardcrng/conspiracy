@@ -1,6 +1,6 @@
-import { Vote } from "../types/game.types"
-import { generateDummyPlayer } from "./data-utils"
-import { isEveryPlayerVoting } from "./game-utils"
+import { Vote } from "../types/game.types";
+import { generateDummyPlayer } from "./data-utils";
+import { isEveryPlayerVoting } from "./game-utils";
 
 describe("isEveryPlayerVoting", () => {
   it("returns true when every player has a non-null vote", () => {
@@ -21,7 +21,7 @@ describe("isEveryPlayerVoting", () => {
     expect(result).toBe(true);
   });
 
-  it('returns false when there is a single player with null vote', () => {
+  it("returns false when there is a single player with null vote", () => {
     const result = isEveryPlayerVoting({
       "player-1": generateDummyPlayer({
         vote: Vote.CONSPIRACY,
@@ -33,12 +33,12 @@ describe("isEveryPlayerVoting", () => {
         vote: null,
       }),
     });
-    expect(result).toBe(false)
-  })
+    expect(result).toBe(false);
+  });
 
   it("returns false when there is a single player without a vote prop", () => {
     const playerWithNoVoteProp = generateDummyPlayer();
-    delete playerWithNoVoteProp.vote
+    delete playerWithNoVoteProp.vote;
 
     const result = isEveryPlayerVoting({
       "player-1": generateDummyPlayer({
@@ -51,4 +51,4 @@ describe("isEveryPlayerVoting", () => {
     });
     expect(result).toBe(false);
   });
-})
+});

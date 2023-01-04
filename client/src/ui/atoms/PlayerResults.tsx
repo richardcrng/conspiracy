@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { Game, Player } from "../../types/game.types";
-import { isWinner } from '../../utils/game-utils';
+import { isWinner } from "../../utils/game-utils";
 
 interface Props {
   className?: string;
@@ -8,12 +8,15 @@ interface Props {
   players: Record<string, Player>;
 }
 
-export default function PlayerResults({ className, game, players }: Props): JSX.Element {
+export default function PlayerResults({
+  className,
+  game,
+  players,
+}: Props): JSX.Element {
   return (
     <div className={className}>
       <ResultsContainer>
-        {Object.values(players).map(({ id, name}, idx) => {
-
+        {Object.values(players).map(({ id, name }, idx) => {
           return (
             <PlayerResult
               key={id}
@@ -29,10 +32,10 @@ export default function PlayerResults({ className, game, players }: Props): JSX.
 }
 
 const ResultsContainer = styled.div.attrs({
-  className: 'grid gap-x-2 gap-y-4'
+  className: "grid gap-x-2 gap-y-4",
 })`
   grid-template-columns: repeat(2, min-content) minmax(min-content, auto);
-`
+`;
 
 interface PlayerResultProps {
   name: string;
@@ -48,11 +51,11 @@ const PlayerResult = ({ name, isWinner, rowStart }: PlayerResultProps) => (
 );
 
 const Name = styled.span.attrs({
-  className: 'font-bold'
+  className: "font-bold",
 })`
   grid-row-start: ${({ rowStart }: { rowStart: number }) => rowStart};
   grid-column-start: 1;
-`
+`;
 
 const Outcome = styled.span`
   grid-row-start: ${({ rowStart }: { rowStart: number }) => rowStart};

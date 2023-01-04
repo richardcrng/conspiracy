@@ -8,8 +8,8 @@ import {
   Player,
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
-import { generatePossibleConspiracyTargetId } from '../../../client/src/utils/setup-utils';
-import { assertArrayLengthAtLeastOne } from '../../../client/src/utils/type-utils';
+import { generatePossibleConspiracyTargetId } from "../../../client/src/utils/setup-utils";
+import { assertArrayLengthAtLeastOne } from "../../../client/src/utils/type-utils";
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
 
@@ -100,8 +100,8 @@ export class GameManager {
       },
       status: GameStatus.LOBBY,
       settings: {
-        pctProbabilityConspiracy: 50
-      }
+        pctProbabilityConspiracy: 50,
+      },
     };
 
     this._set(newGame);
@@ -196,7 +196,7 @@ export class GameManager {
 
   public start(): void {
     const playerList = this.playerIds();
-    assertArrayLengthAtLeastOne(playerList)
+    assertArrayLengthAtLeastOne(playerList);
 
     this._mutate((g) => {
       g.status = GameStatus.ONGOING;
@@ -205,13 +205,13 @@ export class GameManager {
       g.conspiracyTargetId = generatePossibleConspiracyTargetId(
         playerList,
         g.settings.pctProbabilityConspiracy
-      )
+      );
     });
 
     // each player starts with a null vote
-    this.manageEachPlayer(p => {
-      p.castVote(null)
-    })
+    this.manageEachPlayer((p) => {
+      p.castVote(null);
+    });
   }
 
   /**

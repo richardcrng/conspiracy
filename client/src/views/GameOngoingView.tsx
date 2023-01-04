@@ -1,4 +1,4 @@
-import { Game, Player } from "../types/game.types"
+import { Game, Player } from "../types/game.types";
 import { PlayerOngoingHandlers } from "../types/handler.types";
 import PlayerOngoingView from "../ui/organisms/PlayerOngoingView";
 import { getConspiracyTargetName, isInnocent } from "../utils/game-utils";
@@ -8,8 +8,12 @@ interface Props extends PlayerOngoingHandlers {
   player: Player;
 }
 
-export default function GameOngoingView({ game, onVote, player }: Props): JSX.Element {
-  const conspiracyTargetName = getConspiracyTargetName(game)
+export default function GameOngoingView({
+  game,
+  onVote,
+  player,
+}: Props): JSX.Element {
+  const conspiracyTargetName = getConspiracyTargetName(game);
 
   return (
     <PlayerOngoingView

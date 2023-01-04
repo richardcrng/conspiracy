@@ -7,12 +7,17 @@ export const generateDummyPlayer = ({
   name = generateUUID(),
   gameId = generateRandomGameId(),
   isHost,
-  vote
+  vote,
 }: Partial<Player> = {}): Player => {
   return {
-    id, socketId, name, gameId, isHost, vote
-  }
-}
+    id,
+    socketId,
+    name,
+    gameId,
+    isHost,
+    vote,
+  };
+};
 
 export const generateUUID = (): string => uuidv4();
 

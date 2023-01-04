@@ -1,17 +1,25 @@
-import { Game, Player } from "../types/game.types"
+import { Game, Player } from "../types/game.types";
 import { PlayerGameEndHandlers } from "../types/handler.types";
 import PlayerGameEndView from "../ui/organisms/PlayerGameEndView";
-import { getGameOutcome, getPlayerOutcome, isWinOutcome } from "../utils/game-utils";
+import {
+  getGameOutcome,
+  getPlayerOutcome,
+  isWinOutcome,
+} from "../utils/game-utils";
 
 interface Props extends PlayerGameEndHandlers {
   game: Game;
   player: Player;
 }
 
-export default function GameEndView({ game, onGameRestart, player }: Props): JSX.Element {
+export default function GameEndView({
+  game,
+  onGameRestart,
+  player,
+}: Props): JSX.Element {
   const gameOutcome = getGameOutcome(game);
-  const playerOutcome = getPlayerOutcome(game, player.id)
-  const isWin = isWinOutcome(playerOutcome)
+  const playerOutcome = getPlayerOutcome(game, player.id);
+  const isWin = isWinOutcome(playerOutcome);
 
   return (
     <PlayerGameEndView

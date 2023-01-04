@@ -37,7 +37,10 @@ export function isSeedOrRNGOrPseudoRNG(
  * @param arr Array of element to shuffle
  * @returns a shuffled version of the array
  */
-export function fisherYatesShuffle<Arr extends Array<unknown>>(arr: Arr, seedOrRNG?: string | SeedOrRNGOrPseudoRNG): Arr {
+export function fisherYatesShuffle<Arr extends Array<unknown>>(
+  arr: Arr,
+  seedOrRNG?: string | SeedOrRNGOrPseudoRNG
+): Arr {
   const copyToShuffle = [...arr] as Arr;
 
   const rng = getRNGFromMaybeSeed(seedOrRNG);

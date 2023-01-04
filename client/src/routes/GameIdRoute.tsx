@@ -39,10 +39,10 @@ export default function GameIdRoute(): JSX.Element {
       game={game.data}
       player={playerData}
       onGameRestart={() => {
-        socket.emit('RESTART_GAME', gameId)
+        socket.emit("RESTART_GAME", gameId);
       }}
       onVote={(vote) => {
-        socket.emit('CAST_VOTE', gameId, playerData.id, vote)
+        socket.emit("CAST_VOTE", gameId, playerData.id, vote);
       }}
     />
   );

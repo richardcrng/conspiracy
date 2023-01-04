@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { Game, GameOutcome, Player, PlayerOutcome } from "../../types/game.types";
+import {
+  Game,
+  GameOutcome,
+  Player,
+  PlayerOutcome,
+} from "../../types/game.types";
 import { PlayerGameEndHandlers } from "../../types/handler.types";
 import { getGameHost } from "../../utils/game-utils";
 import FlavourText from "../atoms/FlavourText";
@@ -26,9 +31,8 @@ export default function PlayerGameEndView({
   onGameRestart,
   player,
   playerOutcome,
-  players
+  players,
 }: Props): JSX.Element {
-
   return (
     <>
       <Container>
@@ -104,10 +108,10 @@ const getPlayerGifUrl = (playerOutcome: PlayerOutcome): string => {
       // flat earther
       return "https://media.giphy.com/media/eg4d3BZTuxeuDyM9UZ/giphy.gif";
   }
-}
+};
 
 const Container = styled.div.attrs({
-  className: 'h-full gap-y-4 justify-items-center grid'
+  className: "h-full gap-y-4 justify-items-center grid",
 })`
   grid-template-areas:
     "win-status"
@@ -118,40 +122,40 @@ const Container = styled.div.attrs({
     "player-actions";
 
   grid-template-rows: 15% min-content 25% min-content 1fr repeat(2, auto);
-`
+`;
 
 const WinStatus = styled(PlayerWinOrLose).attrs({
-  className: 'w-full text-center font-bold flex flex-col place-content-center'
+  className: "w-full text-center font-bold flex flex-col place-content-center",
 })`
   grid-area: win-status;
-`
+`;
 
 const Description = styled(PlayerWinOrLoseInfo).attrs({
-  className: 'px-4 text-xl'
+  className: "px-4 text-xl",
 })`
   grid-area: description;
-`
+`;
 
 const Gif = styled.img.attrs({
-  className: 'max-h-full'
+  className: "max-h-full",
 })`
   grid-area: gif;
 `;
 
 const Message = styled.p.attrs({
-  className: 'font-semibold px-4 text-center'
+  className: "font-semibold px-4 text-center",
 })`
   grid-area: message;
-`
+`;
 
 const ResultsData = styled(PlayerResults).attrs({
-  className: 'flex flex-col place-content-center px-2 overflow-y-scroll'
+  className: "flex flex-col place-content-center px-2 overflow-y-scroll",
 })`
   grid-area: results-data;
-`
+`;
 
 const PlayerActions = styled.div.attrs({
-  className: 'w-full flex flex-col justify-end px-2 text-center'
+  className: "w-full flex flex-col justify-end px-2 text-center",
 })`
   grid-area: player-actions;
-`
+`;
