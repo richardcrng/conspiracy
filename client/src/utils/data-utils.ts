@@ -1,4 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
+import { Player } from "../types/game.types";
+
+export const generateDummyPlayer = ({
+  id = generateUUID(),
+  socketId = generateUUID(),
+  name = generateUUID(),
+  gameId = generateRandomGameId(),
+  isHost,
+  vote
+}: Partial<Player> = {}): Player => {
+  return {
+    id, socketId, name, gameId, isHost, vote
+  }
+}
 
 export const generateUUID = (): string => uuidv4();
 

@@ -1,4 +1,4 @@
-import { Game, Vote } from '../types/game.types'
+import { Game, Player, Vote } from '../types/game.types'
 
 export const gameLobbyReadiness = (
   game: Game
@@ -24,6 +24,16 @@ export const getConspiracyTargetName = (game: Game): string | undefined => {
     return game.players[game.conspiracyTargetId]!.name;
   }
 };
+
+export const isEveryPlayerVoting = (players: Record<string, Player>): players is Record<string, Player & { vote: Vote }> => {
+  for (const playerId in players) {
+    if (!(players[playerId]?.vote)) {
+      return false
+    }
+  }
+  
+  return true
+}
 
 export const isGameWithConspiracyTarget = (game: Game): game is Game & { conspiracyTargetId: string } => !!game.conspiracyTargetId;
 
