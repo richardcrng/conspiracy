@@ -46,7 +46,9 @@ export const kickPlayer: ClientEventListeners["KICK_PLAYER"] = (
 };
 
 export const restartGame: ClientEventListeners['RESTART_GAME'] = (gameId) => {
-  GameManager.for(gameId).start()
+  GameManager.for(gameId).update(g => {
+    g.status = GameStatus.LOBBY
+  })
 }
 
 export const startGame: ClientEventListeners["START_GAME"] = (gameId) => {
