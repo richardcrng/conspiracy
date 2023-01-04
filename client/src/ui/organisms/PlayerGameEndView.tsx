@@ -57,6 +57,7 @@ export default function PlayerGameEndView({
             </>
           )}
         </Message>
+        <Gif alt={playerOutcome} src={getPlayerGifUrl(playerOutcome)} />
         <ResultsData {...{ game, players }} />
         {/* <VoteActions>
           <div className="flex justify-center items-center content-center h-10">
@@ -105,6 +106,29 @@ export default function PlayerGameEndView({
   );
 }
 
+const getPlayerGifUrl = (playerOutcome: PlayerOutcome): string => {
+  switch (playerOutcome) {
+    case PlayerOutcome.CONSPIRATOR_WIN:
+      // littlefinger smug
+      return "https://media.giphy.com/media/Vff5Qxz6LLzag/giphy.gif";
+    case PlayerOutcome.CONSPIRATOR_LOSE:
+      // foiled
+      return "https://media.giphy.com/media/xUNd9I18JKZnp91Kne/giphy.gif";
+    case PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY:
+      // sherlock victory
+      return "https://media.giphy.com/media/l6d8IEQdmiSsM/giphy.gif";
+    case PlayerOutcome.INNOCENT_LOSE_VS_CONSPIRACY:
+      // shocked Jim Carey
+      return "https://media.giphy.com/media/jquDWJfPUMCiI/giphy.gif";
+    case PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY:
+      // minions - no conspiracy and win
+      return "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif";
+    case PlayerOutcome.INNOCENT_LOSE_NO_CONSPIRACY:
+      // flat earther
+      return "https://media.giphy.com/media/eg4d3BZTuxeuDyM9UZ/giphy.gif";
+  }
+}
+
 const Container = styled.div.attrs({
   className: 'h-full gap-y-4 justify-items-center grid'
 })`
@@ -131,10 +155,10 @@ const Description = styled(PlayerWinOrLoseInfo).attrs({
   grid-area: description;
 `
 
-const Gif = styled.image.attrs({
+const Gif = styled.img.attrs({
   // className: 'btn btn-sm btn-block'
 })`
-  grid-area: Gif;
+  grid-area: gif;
 `;
 
 const Message = styled.p.attrs({
