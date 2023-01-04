@@ -81,7 +81,7 @@ export const getGameOutcome = (game: Game): GameOutcome => {
   const isConspiracy = typeof game.conspiracyTargetId === "string";
 
   if (isConspiracy) {
-    return getVote(game, getConspiracyTargetId(game)!) === Vote.NO_CONSPIRACY
+    return getVote(game, getConspiracyTargetId(game)!) === Vote.CONSPIRACY
       ? GameOutcome.CONSPIRATORS_LOSE
       : GameOutcome.CONSPIRATORS_WIN;
   }

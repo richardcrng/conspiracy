@@ -37,7 +37,7 @@ export default function PlayerGameEndView({
         <Message>
           {gameOutcome === GameOutcome.CONSPIRATORS_WIN && (
             <>
-              The <FlavourText.Conspirator />s all won together by tricking the{" "}
+              The <FlavourText.Conspirator /> team won together by tricking the{" "}
               <FlavourText.Innocent /> player
             </>
           )}
