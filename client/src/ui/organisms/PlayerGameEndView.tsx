@@ -1,13 +1,9 @@
-import classNames from "classnames";
-import { useState } from "react";
 import styled from "styled-components";
-import { Game, GameOutcome, Player, PlayerOutcome, Vote } from "../../types/game.types";
+import { Game, GameOutcome, Player, PlayerOutcome } from "../../types/game.types";
 import { PlayerGameEndHandlers } from "../../types/handler.types";
+import { getGameHost } from "../../utils/game-utils";
 import FlavourText from "../atoms/FlavourText";
-import PlayerAlignmentInfo from "../atoms/PlayerAlignmentInfo";
 import PlayerResults from "../atoms/PlayerResults";
-import PlayerVotes from "../atoms/PlayerVotes";
-import PlayerWinConditionModal from "../atoms/PlayerWinConditionModal";
 import PlayerWinOrLose from "../atoms/PlayerWinOrLose";
 import PlayerWinOrLoseInfo from "../atoms/PlayerWinOrLoseInfo";
 
@@ -47,7 +43,8 @@ export default function PlayerGameEndView({
           )}
           {gameOutcome === GameOutcome.CONSPIRATORS_LOSE && (
             <>
-              The sole <FlavourText.Innocent /> won by figuring out the <FlavourText.Conspiracy />
+              The sole <FlavourText.Innocent /> won by figuring out the{" "}
+              <FlavourText.Conspiracy />
             </>
           )}
           {gameOutcome === GameOutcome.CALM_INNOCENTS_WIN && (
@@ -59,48 +56,28 @@ export default function PlayerGameEndView({
         </Message>
         <Gif alt={playerOutcome} src={getPlayerGifUrl(playerOutcome)} />
         <ResultsData {...{ game, players }} />
-        {/* <VoteActions>
-          <div className="flex justify-center items-center content-center h-10">
-            <p className="italic text-sm">
-              {player.vote ? (
-                <>
-                  <span>
-                    You are voting{" "}
-                    <span
-                      className={`font-bold text-${
-                        player.vote === Vote.CONSPIRACY ? "error" : "success"
-                      }`}
-                    >
-                      {player.vote.toUpperCase()}
-                    </span>
-                  </span>
-                  <button
-                    className="btn btn-ghost btn-xs"
-                    onClick={makeVoteHandler(null)}
-                  >
-                    X UNVOTE
-                  </button>
-                </>
-              ) : (
-                <>Click below to vote</>
-              )}
-            </p>
-          </div>
-          <div className="w-full btn-group">
-            <button
-              className={classNames("btn w-1/2 btn-error")}
-              onClick={makeVoteHandler(Vote.CONSPIRACY)}
-            >
-              {player.vote === Vote.CONSPIRACY ? "🗳️ " : ""}Conspiracy
-            </button>
-            <button
-              className={classNames("btn w-1/2 btn-success")}
-              onClick={makeVoteHandler(Vote.NO_CONSPIRACY)}
-            >
-              No Conspiracy{player.vote === Vote.NO_CONSPIRACY ? " 🗳️" : ""}
-            </button>
-          </div>
-        </VoteActions> */}
+        <PlayerActions>
+          {player.isHost ? (
+            <>
+              <p className="text-sm">As host, you can restart the game.</p>
+              <button
+                className="mt-2 btn btn-block btn-sm"
+                onClick={onGameRestart}
+              >
+                Restart game
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="font-semibold text-lg">Play again?</p>
+              <p className="text-sm">
+                Ask{" "}
+                <span className="font-semibold">{getGameHost(game).name}</span>{" "}
+                (host) to restart the game.
+              </p>
+            </>
+          )}
+        </PlayerActions>
       </Container>
     </>
   );
@@ -168,13 +145,13 @@ const Message = styled.p.attrs({
 `
 
 const ResultsData = styled(PlayerResults).attrs({
-  className: 'flex flex-col place-content-center px-4'
+  className: 'flex flex-col place-content-center px-2'
 })`
   grid-area: results-data;
 `
 
 const PlayerActions = styled.div.attrs({
-  className: 'w-full flex flex-col justify-end'
+  className: 'w-full flex flex-col justify-end px-2 text-center'
 })`
   grid-area: player-actions;
 `
