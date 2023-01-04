@@ -31,7 +31,7 @@ const AppBackground = styled.div.attrs({
   className: "h-viewport w-[100vw]",
 })`
   padding: 10px;
-  background-image: url("https://images.unsplash.com/photo-1511882150382-421056c89033?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2371&q=80");
+  background-image: url("/assets/images/illuminati.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

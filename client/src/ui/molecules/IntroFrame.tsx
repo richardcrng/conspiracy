@@ -9,7 +9,7 @@ export default function IntroFrame({ children }: Props): JSX.Element {
       <div className="flex flex-col gap-y-2">
         <h1 className="text-3xl font-bold">{"Conspiracy"}</h1>
         <Image
-          src="https://images.unsplash.com/photo-1553481187-be93c21490a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80"
+          src="/assets/images/conspiracy-typewriter.jpg"
           styles={{
             image: {
               height: "50%",
