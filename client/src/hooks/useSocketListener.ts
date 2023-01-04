@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect } from "react";
 import { useSocket } from "../socket";
 import { ServerEvent, ServerEventListeners } from "../types/event.types";
@@ -8,11 +9,11 @@ export default function useSocketListener<
   const socket = useSocket();
 
   useEffect(() => {
-    // @ts-ignore
+    // @ts-ignore - okay, bad library typing
     socket.on(event, listener);
 
     return function cleanup() {
-      // @ts-ignore
+      // @ts-ignore - okay, bad library typing
       socket.off(event, listener);
     };
   });

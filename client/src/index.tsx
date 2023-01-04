@@ -1,11 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { socket, SocketContext } from "./socket";
 
-import "semantic-ui-css/semantic.min.css";
+import "./index.css";
+import "./variables.css";
 
 const queryClient = new QueryClient();
 
@@ -13,7 +16,11 @@ ReactDOM.render(
   <React.StrictMode>
     <SocketContext.Provider value={socket}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <MantineProvider>
+          <NotificationsProvider position="top-right">
+            <App />
+          </NotificationsProvider>
+        </MantineProvider>
       </QueryClientProvider>
     </SocketContext.Provider>
   </React.StrictMode>,

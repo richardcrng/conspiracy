@@ -5,13 +5,23 @@
     "server"
   ],
   "scripts": {
-    "build": "yarn build:server && yarn build:client",
-    "build:client": "yarn workspace @conspiracy/client build",
-    "build:server": "yarn workspace @conspiracy/server build",
-    "start:client:dev": "yarn workspace @conspiracy/client start",
+    "format": "yarn workspaces run format",
+    "format:check": "yarn workspaces run format:check",
+    "lint": "yarn workspaces run lint",
+    "lint:strict": "yarn workspaces run lint:strict",
+    "build": "yarn workspaces run build",
+    "dev:client": "yarn workspace @conspiracy/client dev",
+    "dev:server": "yarn workspace @conspiracy/server dev",
     "start:server": "yarn workspace @conspiracy/server start",
     "start:server:compiled": "yarn workspace @conspiracy/server start:compiled",
-    "start:server:dev": "yarn workspace @conspiracy/server start:dev",
-    "heroku-postbuild": "yarn build:server"
+    "test": "yarn workspaces run test",
+    "test:types": "yarn workspace @conspiracy/server test:types",
+    "test:client:watch": "yarn workspace @conspiracy/client test:watch",
+    "test:server:watch": "yarn workspace @conspiracy/server test:watch",
+    "heroku-postbuild": "yarn workspace @conspiracy/server build",
+    "prepare": "node ./prepare.js"
+  },
+  "devDependencies": {
+    "husky": "^7.0.0"
   }
 }

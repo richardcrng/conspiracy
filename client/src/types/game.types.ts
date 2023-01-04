@@ -1,53 +1,54 @@
+export interface GameStateCore {
+  id: string;
+  players: {
+    [playerId: string]: Player;
+  };
+  status: GameStatus;
+  conspiracyTargetId?: string | null;
+  settings: GameSettings;
+}
+
+export type Game = GameStateCore;
+
 export enum GameStatus {
   LOBBY = "lobby",
-  STARTED = "started",
-  COMPLETE = "complete",
+  ONGOING = "ongoing",
+  END = "end",
 }
 
-export interface Player {
-  socketId: string;
+export interface LocalPlayerData {
+  id: string;
+  name: string;
   gameId?: string;
-  name?: string;
-  isHost?: boolean;
 }
 
-export type Game = GameBase | GameInLobby | GameOngoing;
+export interface Player extends LocalPlayerData {
+  socketId: string;
+  gameId: string;
+  isHost?: boolean;
+  vote?: Vote | null;
+}
 
-export type GameOngoing = GameConspiracyOngoing | GameNoConspiracyOngoing;
+export enum GameOutcome {
+  CONSPIRATORS_WIN = "game-outcome/conspirators-win",
+  CONSPIRATORS_LOSE = "game-outcome/conspirators-lose",
+  CALM_INNOCENTS_WIN = "game-outcome/calm-innocents-win",
+}
+
+export enum PlayerOutcome {
+  CONSPIRATOR_WIN = "player-outcome/conspirator-win",
+  CONSPIRATOR_LOSE = "player-outcome/conspirator-lose",
+  INNOCENT_WIN_VS_CONSPIRACY = "player-outcome/innocent-win-vs-conspiracy",
+  INNOCENT_LOSE_VS_CONSPIRACY = "player-outcome/innocent-lose-vs-conspiracy",
+  INNOCENT_WIN_NO_CONSPIRACY = "player-outcome/innocent-win-no-conspiracy",
+  INNOCENT_LOSE_NO_CONSPIRACY = "player-outcome/innocent-lose-no-conspiracy",
+}
 
 export enum Vote {
   CONSPIRACY = "conspiracy",
   NO_CONSPIRACY = "no conspiracy",
 }
 
-export interface GameBase {
-  id: string;
-  players: {
-    [playerName: string]: Player;
-  };
-  status: GameStatus;
-  conspiracyTarget?: Player["name"] | null;
-  votes?: { [K in keyof GameBase["players"]]: Vote };
-}
-
-export interface GameInLobby extends GameBase {
-  status: GameStatus.LOBBY;
-  conspiracyTarget: never;
-  votes: never;
-}
-
-export interface GameNoConspiracyOngoing extends GameBase {
-  conspiracyTarget: null;
-  status: GameStatus.STARTED;
-}
-
-export interface GameConspiracyOngoing extends GameBase {
-  conspiracyTarget: Player["name"];
-  status: GameStatus.STARTED;
-}
-
-export interface OngoingGame extends GameBase {
-  status: GameStatus.STARTED;
-  conspiracyTarget: Player["name"] | null;
-  votes: { [K in keyof GameBase["players"]]: Vote };
+export interface GameSettings {
+  pctProbabilityConspiracy: number;
 }
