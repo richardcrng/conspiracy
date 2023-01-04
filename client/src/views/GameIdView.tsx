@@ -1,27 +1,35 @@
+import { Redirect } from "react-router-dom";
+import { PATHS } from "../routes/paths";
 import { Game, GameStatus, Player } from "../types/game.types";
-import { PlayerOngoingHandlers } from "../types/handler.types";
-import IntroFrame from "../ui/molecules/IntroFrame";
+import { PlayerGameEndHandlers, PlayerOngoingHandlers } from "../types/handler.types";
+import GameEndView from "./GameEndView";
 import GameOngoingView from "./GameOngoingView";
 
-interface Props extends PlayerOngoingHandlers {
+interface Props extends PlayerOngoingHandlers, PlayerGameEndHandlers {
   game: Game;
   player: Player;
 }
 
 export default function GameIdView({ game, player, ...handlers }: Props): JSX.Element {
 
-  if (game.status === GameStatus.ONGOING) {
-    return (
-      <GameOngoingView
-        {...{ game, player, ...handlers }}
-      />
-    )
-  }
+  switch (game.status) {
+    case GameStatus.ONGOING:
+      return (
+        <GameOngoingView
+          {...{ game, player, ...handlers }}
+        />
+      )
 
-  return (
-    <IntroFrame>
-      <p>Game has started!</p>
-      <pre>{JSON.stringify(game, null, 2)}</pre>
-    </IntroFrame>
-  );
+    case GameStatus.END:
+      return (
+        <GameEndView
+          {...{ game, player, ...handlers }}
+        />
+      )
+
+    case GameStatus.LOBBY:
+      return (
+        <Redirect to={PATHS.lobbyForGameId(game.id)} />
+      )
+  }
 }

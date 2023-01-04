@@ -1,4 +1,4 @@
-import { Game, Player, Vote } from '../types/game.types'
+import { Game, GameOutcome, Player, PlayerOutcome, Vote } from '../types/game.types'
 
 export const gameLobbyReadiness = (
   game: Game
@@ -64,13 +64,20 @@ export const isWinner = (game: Game, playerId: string): boolean => {
   }
 };
 
-enum PlayerOutcome {
-  CONSPIRATOR_WIN = 'conspirator-win',
-  CONSPIRATOR_LOSE = 'conspirator-lose',
-  INNOCENT_WIN_VS_CONSPIRACY = 'innocent-win-vs-conspiracy',
-  INNOCENT_LOSE_VS_CONSPIRACY = 'innocent-lose-vs-conspiracy',
-  INNOCENT_WIN_NO_CONSPIRACY = 'innocent-win-no-conspiracy',
-  INNOCENT_LOSE_NO_CONSPIRACY = 'innocent-lose-no-conspiracy',
+export const isWinOutcome = (outcome: PlayerOutcome): outcome is PlayerOutcome.CONSPIRATOR_WIN | PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY | PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY => {
+  return [PlayerOutcome.CONSPIRATOR_WIN, PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY, PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY].includes(outcome)
+}
+
+export const getGameOutcome = (game: Game): GameOutcome => {
+  const isConspiracy = typeof game.conspiracyTargetId === "string";
+
+  if (isConspiracy) {
+    return getVote(game, getConspiracyTargetId(game)!) === Vote.NO_CONSPIRACY
+      ? GameOutcome.CONSPIRATORS_LOSE
+      : GameOutcome.CONSPIRATORS_WIN;
+  }
+
+  return GameOutcome.CALM_INNOCENTS_WIN
 }
 
 export const getPlayerOutcome = (game: Game, playerId: string): PlayerOutcome => {

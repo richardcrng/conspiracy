@@ -19,6 +19,7 @@ export const addListeners = (socket: ServerSocket): void => {
     GET_GAME: getGame,
     JOIN_GAME: joinGame,
     KICK_PLAYER: kickPlayer,
+    RESTART_GAME: () => undefined,
     START_GAME: startGame,
   };
 

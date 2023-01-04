@@ -8,3 +8,7 @@ export interface LobbyHandlers {
 export interface PlayerOngoingHandlers {
   onVote(vote: Vote | null): void;
 }
+
+export interface PlayerGameEndHandlers {
+  onGameRestart(): void;
+}

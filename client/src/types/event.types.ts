@@ -23,6 +23,7 @@ export type ClientEventListeners = {
   JOIN_GAME: (gameId: string, player: Omit<Player, "gameId">) => void;
   KICK_PLAYER: (gameId: string, playerId: string) => void;
   CAST_VOTE: (gameId: string, playerId: string, vote: Vote | null) => void;
+  RESTART_GAME: (gameId: string) => void;
   START_GAME: (gameId: string) => void;
 };
 

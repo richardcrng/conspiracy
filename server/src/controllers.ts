@@ -9,12 +9,12 @@ export const castVote: ClientEventListeners["CAST_VOTE"] = (
   vote
 ) => {
   const gameManager = GameManager.for(gameId)
-  if (gameManager.snapshot()?.status === GameStatus.COMPLETE) return
-  
+  if (gameManager.snapshot()?.status === GameStatus.END) return
+
   gameManager.managePlayer(playerId).castVote(vote);
   gameManager.update(g => {
     if (isEveryPlayerVoting(g.players)) {
-      g.status = GameStatus.COMPLETE
+      g.status = GameStatus.END
     }
   })
 };
