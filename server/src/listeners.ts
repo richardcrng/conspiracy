@@ -9,6 +9,7 @@ import {
   getGame,
   joinGame,
   kickPlayer,
+  restartGame,
   startGame,
 } from "./controllers";
 
@@ -19,7 +20,7 @@ export const addListeners = (socket: ServerSocket): void => {
     GET_GAME: getGame,
     JOIN_GAME: joinGame,
     KICK_PLAYER: kickPlayer,
-    RESTART_GAME: () => undefined,
+    RESTART_GAME: restartGame,
     START_GAME: startGame,
   };
 
