@@ -64,6 +64,33 @@ export const isWinner = (game: Game, playerId: string): boolean => {
   }
 };
 
+enum PlayerOutcome {
+  CONSPIRATOR_WIN = 'conspirator-win',
+  CONSPIRATOR_LOSE = 'conspirator-lose',
+  INNOCENT_WIN_VS_CONSPIRACY = 'innocent-win-vs-conspiracy',
+  INNOCENT_LOSE_VS_CONSPIRACY = 'innocent-lose-vs-conspiracy',
+  INNOCENT_WIN_NO_CONSPIRACY = 'innocent-win-no-conspiracy',
+  INNOCENT_LOSE_NO_CONSPIRACY = 'innocent-lose-no-conspiracy',
+}
+
+export const getPlayerOutcome = (game: Game, playerId: string): PlayerOutcome => {
+  const isConspiracy = typeof game.conspiracyTargetId === 'string'
+
+  if (isConspiracy) {
+    return isConspiracyTarget(game, playerId)
+      ? isWinner(game, playerId)
+        ? PlayerOutcome.INNOCENT_WIN_VS_CONSPIRACY
+        : PlayerOutcome.INNOCENT_LOSE_VS_CONSPIRACY
+      : isWinner(game, playerId)
+        ? PlayerOutcome.CONSPIRATOR_WIN
+        : PlayerOutcome.CONSPIRATOR_LOSE
+  }
+
+  return getVote(game, playerId) === Vote.NO_CONSPIRACY
+    ? PlayerOutcome.INNOCENT_WIN_NO_CONSPIRACY
+    : PlayerOutcome.INNOCENT_LOSE_NO_CONSPIRACY
+}
+
 export const getVote = (game: Game, playerId: string): Vote | null => {
   const player = game.players[playerId];
   if (!player) throw new Error(`Can't get vote for non-existent player ${playerId}`)
