@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
 import styled from "styled-components";
-import { GameOutcome, Player, PlayerOutcome, Vote } from "../../types/game.types";
+import { Game, GameOutcome, Player, PlayerOutcome, Vote } from "../../types/game.types";
 import { PlayerGameEndHandlers } from "../../types/handler.types";
 import FlavourText from "../atoms/FlavourText";
 import PlayerAlignmentInfo from "../atoms/PlayerAlignmentInfo";
+import PlayerResults from "../atoms/PlayerResults";
 import PlayerVotes from "../atoms/PlayerVotes";
 import PlayerWinConditionModal from "../atoms/PlayerWinConditionModal";
 import PlayerWinOrLose from "../atoms/PlayerWinOrLose";
@@ -12,6 +13,7 @@ import PlayerWinOrLoseInfo from "../atoms/PlayerWinOrLoseInfo";
 
 interface Props extends PlayerGameEndHandlers {
   // conspiracyTargetName?: string;
+  game: Game;
   gameOutcome: GameOutcome;
   // isInnocent: boolean;
   isWin: boolean;
@@ -22,6 +24,7 @@ interface Props extends PlayerGameEndHandlers {
 
 export default function PlayerGameEndView({
   // conspiracyTargetName,
+  game,
   gameOutcome,
   isWin,
   onGameRestart,
@@ -54,8 +57,8 @@ export default function PlayerGameEndView({
             </>
           )}
         </Message>
-        {/* <VoteData {...{ players }} />
-        <VoteActions>
+        <ResultsData {...{ game, players }} />
+        {/* <VoteActions>
           <div className="flex justify-center items-center content-center h-10">
             <p className="italic text-sm">
               {player.vote ? (
@@ -110,7 +113,7 @@ const Container = styled.div.attrs({
     "description"
     "gif"
     "message"
-    "vote-data"
+    "results-data"
     "player-actions";
 
   grid-template-rows: 15% repeat(3, min-content) repeat(2, auto);
@@ -135,15 +138,15 @@ const Gif = styled.image.attrs({
 `;
 
 const Message = styled.p.attrs({
-  className: 'font-semibold'
+  className: 'font-semibold px-4 text-center'
 })`
   grid-area: message;
 `
 
-const VoteData = styled(PlayerVotes).attrs({
+const ResultsData = styled(PlayerResults).attrs({
   className: 'flex flex-col place-content-center px-4'
 })`
-  grid-area: vote-data;
+  grid-area: results-data;
 `
 
 const PlayerActions = styled.div.attrs({

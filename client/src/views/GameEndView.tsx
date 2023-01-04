@@ -16,7 +16,7 @@ export default function GameEndView({ game, onGameRestart, player }: Props): JSX
 
   return (
     <PlayerGameEndView
-      {...{ gameOutcome, isWin, onGameRestart, player, playerOutcome }}
+      {...{ game, gameOutcome, isWin, onGameRestart, player, playerOutcome }}
       players={game.players}
     />
   );
