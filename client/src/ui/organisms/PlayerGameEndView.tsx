@@ -117,7 +117,7 @@ const Container = styled.div.attrs({
     "results-data"
     "player-actions";
 
-  grid-template-rows: 15% repeat(3, min-content) repeat(2, auto);
+  grid-template-rows: 15% min-content 25% min-content 1fr repeat(2, auto);
 `
 
 const WinStatus = styled(PlayerWinOrLose).attrs({
@@ -133,7 +133,7 @@ const Description = styled(PlayerWinOrLoseInfo).attrs({
 `
 
 const Gif = styled.img.attrs({
-  // className: 'btn btn-sm btn-block'
+  className: 'max-h-full'
 })`
   grid-area: gif;
 `;
@@ -145,7 +145,7 @@ const Message = styled.p.attrs({
 `
 
 const ResultsData = styled(PlayerResults).attrs({
-  className: 'flex flex-col place-content-center px-2'
+  className: 'flex flex-col place-content-center px-2 overflow-y-scroll'
 })`
   grid-area: results-data;
 `
