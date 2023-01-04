@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.redirect("https://my-conspiracy.rcr.dev");
+  res.redirect("https://conspiracy.upsink.games");
 });
 
 app.get("/ping", (req, res) => {
